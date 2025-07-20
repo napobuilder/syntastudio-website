@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C9WRLXEGJL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-C9WRLXEGJL');
+    </script>
+
+    <!-- SEO Meta Tags Estratégicos -->
+    <title>Manifiesto de Marca en Una Página - Synta Studio</title>
+    <meta name="description" content="Obtén la claridad estratégica que tu negocio necesita. Creamos tu mensaje de poder, propuesta de valor y llamada a la acción por solo $37.">
+    <meta name="robots" content="noindex, nofollow"> <!-- Evita que esta página sea indexada -->
+
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://syntastudio.com/manifiesto">
+    <meta property="og:title" content="Manifiesto de Marca en Una Página - Synta Studio">
+    <meta property="og:description" content="El primer paso para construir un sistema que vende: la claridad de tu mensaje.">
+    <meta property="og:image" content="https://i.imgur.com/vgnuj55.png">
+
+    <!-- Twitter Meta Tags -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://syntastudio.com/manifiesto">
+    <meta property="twitter:title" content="Manifiesto de Marca en Una Página - Synta Studio">
+    <meta property="twitter:description" content="El primer paso para construir un sistema que vende: la claridad de tu mensaje.">
+    <meta property="twitter:image" content="https://i.imgur.com/vgnuj55.png">
+
+    <!-- Optimización de Carga de Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
+    
+    <style>
+        :root {
+            --color-primario: #6a11cb;
+            --color-secundario: #2575fc;
+            --color-fondo: #ffffff;
+            --color-fondo-seccion: #f8f9fa;
+            --color-texto-principal: #1a1a1a;
+            --color-texto-secundario: #4a4a4a;
+            --fuente-principal: 'Poppins', sans-serif;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--fuente-principal);
+            margin: 0;
+            background-color: var(--color-fondo-seccion);
+            color: var(--color-texto-principal);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        h1, h2, h3 { font-weight: 600; line-height: 1.2; margin-top: 0; }
+        h2 { font-size: clamp(2rem, 4vw, 2.8rem); color: var(--color-texto-principal); text-align: center; margin-bottom: 20px; }
+        p { font-size: 1.1rem; color: var(--color-texto-secundario); margin-bottom: 20px; }
+        
+        /* ESTILO PARA EL BOTÓN PERSONALIZADO */
+        .cta-button {
+            display: inline-block; font-size: 1.2rem; font-weight: 600; text-decoration: none; color: white;
+            padding: 18px 40px; border-radius: 50px; border: none; cursor: pointer;
+            background: linear-gradient(90deg, var(--color-primario), var(--color-secundario), var(--color-primario));
+            background-size: 200% 100%;
+            transition: background-position 0.5s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .cta-button:hover { background-position: 100% 0; transform: translateY(-3px); box-shadow: 0 8px 25px rgba(106, 17, 203, 0.3); }
+        
+        .main-header {
+            background: var(--color-fondo); padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .header-container { display: flex; justify-content: center; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-icon-wrapper {
+            width: 35px; height: 35px; background: linear-gradient(90deg, var(--color-primario), var(--color-secundario));
+            -webkit-mask: url(https://i.imgur.com/vgnuj55.png) no-repeat center / contain;
+            mask: url(https://i.imgur.com/vgnuj55.png) no-repeat center / contain;
+        }
+        .logo span { font-weight: 700; font-size: 1.5rem; color: var(--color-texto-principal); }
+
+        .sales-section { padding: 120px 0 80px 0; }
+        .sales-container {
+            max-width: 800px; margin: 0 auto; background: var(--color-fondo);
+            padding: 40px 50px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .sales-container p.intro { max-width: 600px; margin-left: auto; margin-right: auto; margin-bottom: 40px; font-size: 1.2rem; }
+        
+        .product-cover {
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto 40px auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid #eee;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .what-you-get { text-align: left; max-width: 600px; margin: 40px auto; }
+        .what-you-get h3 { text-align: center; font-size: 1.5rem; margin-bottom: 30px; }
+        .get-item { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 25px; }
+        .get-item .icon { color: var(--color-primario); flex-shrink: 0; margin-top: 5px; }
+        .get-item .icon svg { width: 28px; height: 28px; }
+        .get-item p { margin: 0; }
+        .get-item strong { color: var(--color-texto-principal); }
+
+        .bonus-box {
+            background: var(--color-fondo-seccion); border: 2px dashed var(--color-primario);
+            padding: 30px; border-radius: 12px; margin: 50px auto; max-width: 650px;
+        }
+        .bonus-box h3 { color: var(--color-primario); }
+
+        .price-box { margin: 40px 0; }
+        .price { font-size: 3rem; font-weight: 700; color: var(--color-texto-principal); }
+        
+        .guarantee { margin-top: 30px; }
+        .guarantee p { font-size: 0.9rem; color: var(--color-texto-secundario); }
+
+        .main-footer {
+            background-color: var(--color-fondo-seccion); text-align: center;
+            padding: 40px 0; font-size: 0.9rem; color: var(--color-texto-secundario);
+        }
+        
+        @media (max-width: 768px) {
+            .sales-container { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon-wrapper"></div>
+                <span>Synta Studio</span>
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <section class="sales-section">
+            <div class="container sales-container">
+                
+                <h2>El Primer Paso Para Dejar de Ser Invisible: La Claridad</h2>
+                <p class="intro">Tu negocio puede ser el mejor, pero si tu mensaje es confuso, eres invisible. Antes de invertir miles en una web o en anuncios, invierte en lo único que importa: un mensaje que conecte y convierta.</p>
+                
+                <img src="https://i.imgur.com/NAZO0s8.png" alt="Portada del producto Manifiesto de Marca" class="product-cover">
+
+                <div class="what-you-get">
+                    <h3>Esto es lo que voy a construir para ti:</h3>
+                    <div class="get-item">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+                        </div>
+                        <div>
+                            <strong>Tu Titular de Poder:</strong>
+                            <p>La frase exacta que captura la atención de tu cliente ideal y lo obliga a seguir leyendo.</p>
+                        </div>
+                    </div>
+                    <div class="get-item">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9a8 8 0 0 1 16 0v10M4 19h5m11 0h-5"/></svg>
+                        </div>
+                        <div>
+                            <strong>Tu Propuesta de Valor Irresistible:</strong>
+                            <p>El mensaje claro que te posiciona como la única opción lógica y destruye a la competencia.</p>
+                        </div>
+                    </div>
+                    <div class="get-item">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M21.78,3.22a1,1,0,0,0-1.13-.36L3.36,9.15a1,1,0,0,0-.1,1.8l6.63,2.84L12.73,20.4a1,1,0,0,0,1.8-.1L22.14,4.35A1,1,0,0,0,21.78,3.22Z"/></svg>
+                        </div>
+                        <div>
+                            <strong>Tu Llamada a la Acción que Convierte:</strong>
+                            <p>El siguiente paso lógico que tus prospectos sentirán la necesidad de tomar.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bonus-box">
+                    <h3>BONUS EXCLUSIVO</h3>
+                    <p>Al adquirir tu "Manifiesto de Marca", desbloquearás el acceso para agendar una <strong>Sesión de Plan de Acción gratuita</strong> conmigo para revisar tu nuevo mensaje y trazar los siguientes pasos.</p>
+                </div>
+
+                <div class="price-box">
+                    <p>Obtén tu activo de marketing más importante:</p>
+                    <div class="price">$37</div>
+                </div>
+
+                <!-- BOTÓN DE PAGO PERSONALIZADO -->
+                <a href="#" id="custom-paypal-button" class="cta-button">Sí, Quiero Construir mi Manifiesto de Marca</a>
+
+                <!-- FORMULARIO DE PAYPAL OCULTO -->
+                <form id="paypal-form" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" style="display: none;">
+                    <input type="hidden" name="cmd" value="_s-xclick" />
+                    <input type="hidden" name="hosted_button_id" value="URYCNL8YY6W22" />
+                    <input type="hidden" name="currency_code" value="USD" />
+                    <!-- CORRECCIÓN: Se elimina el input de envío que causaba el conflicto de JavaScript. -->
+                </form>
+
+                <div class="guarantee">
+                    <p><strong>Garantía de Claridad:</strong> Si no sientes que el Manifiesto de Marca te da una claridad 10 veces superior a su valor, te devuelvo tu dinero. Sin preguntas.</p>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Synta Studio. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Este script conecta nuestro botón personalizado con el formulario de PayPal.
+        document.getElementById('custom-paypal-button').addEventListener('click', function(e) {
+            // Prevenimos que el enlace '#' haga algo.
+            e.preventDefault(); 
+            // Buscamos el formulario oculto de PayPal y lo enviamos.
+            document.getElementById('paypal-form').submit(); 
+        });
+    </script>
+</body>
+</html>
