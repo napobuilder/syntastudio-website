@@ -665,17 +665,43 @@ Concluye cada respuesta inmediatamente después de entregar el material solicita
         }
 
         function copyToClipboard(textToCopy, buttonElement) {
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                showNotification('¡Prompt copiado!');
-                if (buttonElement) {
-                    const originalText = buttonElement.textContent;
-                    buttonElement.textContent = '¡Copiado!';
-                    setTimeout(() => { buttonElement.textContent = originalText; }, 2000);
+            const textArea = document.createElement("textarea");
+            textArea.value = textToCopy;
+            
+            // Make the textarea invisible
+            textArea.style.position = "fixed";
+            textArea.style.top = 0;
+            textArea.style.left = 0;
+            textArea.style.width = "2em";
+            textArea.style.height = "2em";
+            textArea.style.padding = 0;
+            textArea.style.border = "none";
+            textArea.style.outline = "none";
+            textArea.style.boxShadow = "none";
+            textArea.style.background = "transparent";
+
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showNotification('¡Prompt copiado!');
+                    if (buttonElement) {
+                        const originalText = buttonElement.textContent;
+                        buttonElement.textContent = '¡Copiado!';
+                        setTimeout(() => { buttonElement.textContent = originalText; }, 2000);
+                    }
+                } else {
+                    showNotification('Error al copiar. Inténtalo manualmente.');
                 }
-            }).catch(err => {
+            } catch (err) {
                 console.error('Error al copiar: ', err);
                 showNotification('Error al copiar. Inténtalo manualmente.');
-            });
+            }
+
+            document.body.removeChild(textArea);
         }
     </script>
     
