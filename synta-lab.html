@@ -210,7 +210,9 @@
 
                 <div id="login-section" class="login-form">
                     <h2>Acceso Restringido</h2>
-                    <p>Introduce la contraseña para acceder a los prompts.</p>
+                    <p>Introduce tus datos y la contraseña para acceder a los prompts.</p>
+                    <input type="text" id="full-name-input" placeholder="Nombre Completo" required>
+                    <input type="email" id="email-input" placeholder="Correo Electrónico" required>
                     <input type="password" id="password-input" placeholder="Contraseña">
                     <button onclick="checkPassword()">Acceder</button>
                     <p id="login-error" class="login-error" style="display: none;">Contraseña incorrecta. Inténtalo de nuevo.</p>
