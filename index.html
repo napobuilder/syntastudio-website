@@ -56,6 +56,9 @@
             color: var(--color-texto-principal); line-height: 1.7;
             -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
         }
+        body.nav-is-open {
+            overflow: hidden;
+        }
         *, *::before, *::after { box-sizing: border-box; }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
         section { padding: 80px 0; }
@@ -77,6 +80,7 @@
             background-size: 200% 100%;
             transition: background-position 0.5s ease, transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            white-space: nowrap; /* <-- SOLUCIÓN AL PROBLEMA DEL BOTÓN */
         }
         .cta-button:hover { background-position: 100% 0; transform: translateY(-3px); box-shadow: 0 8px 25px rgba(106, 17, 203, 0.3); }
         .main-header {
@@ -96,7 +100,31 @@
         .main-nav { display: flex; align-items: center; }
         .main-nav a { color: var(--color-texto-secundario); text-decoration: none; margin-left: 25px; font-weight: 500; transition: color 0.3s ease; white-space: nowrap; font-size: 1rem; }
         .main-nav a:hover { color: var(--color-primario); }
-        .nav-cta { display: none; padding: 12px 28px; font-size: 1rem; margin-left: 25px; }
+        .nav-cta { padding: 12px 28px; font-size: 1rem; margin-left: 25px; }
+        
+        /* ESTILOS PARA MENÚ MÓVIL (HAMBURGUESA) */
+        .mobile-nav-toggle {
+            display: none;
+            position: relative;
+            z-index: 1001;
+            background: transparent;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+        }
+        .hamburger-box { width: 30px; height: 24px; display: inline-block; position: relative; }
+        .hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
+            width: 30px; height: 3px; background-color: var(--color-texto-principal);
+            border-radius: 3px; position: absolute; transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .hamburger-inner { top: 50%; transform: translateY(-50%); }
+        .hamburger-inner::before, .hamburger-inner::after { content: ''; display: block; }
+        .hamburger-inner::before { top: -10px; }
+        .hamburger-inner::after { bottom: -10px; }
+        .nav-is-open .hamburger-inner { transform: rotate(135deg); background-color: var(--color-texto-principal); }
+        .nav-is-open .hamburger-inner::before { top: 0; transform: rotate(0); }
+        .nav-is-open .hamburger-inner::after { top: 0; transform: rotate(90deg); }
+
         .hero {
             position: relative; padding-top: 180px; padding-bottom: 100px; text-align: center; min-height: 90vh;
             display: flex; align-items: center; justify-content: center; overflow: hidden;
@@ -182,7 +210,23 @@
         .reveal.revealed { opacity: 1; transform: translateY(0); }
         .main-footer { background-color: var(--color-fondo-seccion); text-align: center; padding: 40px 0; font-size: 0.9rem; color: var(--color-texto-secundario); }
         .main-footer p { margin-left: auto; margin-right: auto; }
-        @media (max-width: 992px) { .main-nav, .nav-cta { display: none; } }
+        
+        @media (max-width: 992px) {
+            .mobile-nav-toggle { display: block; }
+            .main-nav {
+                position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+                background-color: var(--color-fondo);
+                display: flex; flex-direction: column; justify-content: center; align-items: center;
+                gap: 25px;
+                transform: translateX(100%);
+                transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                z-index: 1000; padding: 20px;
+            }
+            .nav-is-open .main-nav { transform: translateX(0); }
+            .main-nav a { margin-left: 0; font-size: 1.4rem; }
+            .nav-cta { display: inline-block; padding: 15px 35px; font-size: 1.1rem; }
+        }
+        
         @media (max-width: 768px) {
             h1 { font-size: 2.2rem; } h2 { font-size: 1.8rem; }
             section { padding: 60px 0; }
@@ -190,7 +234,7 @@
             .lead-form-container { padding: 0; }
             #final-cta h2, #final-cta .cta-content-wrapper p { text-align: center; }
         }
-        @media (min-width: 993px) { .nav-cta { display: inline-block; } }
+        
         @media (min-width: 769px) {
             .problem-grid { grid-template-columns: repeat(2, 1fr); }
             .features-grid { grid-template-columns: repeat(3, 1fr); }
@@ -259,14 +303,23 @@
                 <div class="logo-icon-wrapper"></div>
                 <span>Synta Studio</span>
             </a>
-            <nav class="main-nav">
+            
+            <!-- Botón Hamburguesa para móvil -->
+            <button class="mobile-nav-toggle" aria-controls="main-nav" aria-expanded="false">
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+            </button>
+            
+            <!-- Navegación con el botón CTA adentro -->
+            <nav class="main-nav" id="main-nav">
                 <a href="#el-sistema">La Solución</a>
                 <a href="#credibilidad">Resultados</a>
                 <a href="#faq">Preguntas</a>
                 <a href="synta-lab.html">Synta Lab</a>
                 <a href="#final-cta">Auditoría Gratuita</a>
+                <a href="#final-cta" class="cta-button nav-cta">Comenzar Auditoría</a>
             </nav>
-            <a href="#final-cta" class="cta-button nav-cta">Comenzar Auditoría</a>
         </div>
     </header>
 
@@ -276,7 +329,6 @@
             <canvas id="hero-canvas"></canvas>
             <div class="container">
                 <p class="hero-subtitle">Para consultores, abogados y profesionales de servicio</p>
-                <!-- CORRECCIÓN DE TEXTO HUÉRFANO -->
                 <h1>Deja de perseguir clientes. Construyamos una web que los atraiga, los cualifique y los agende por&nbsp;ti.</h1>
                 <p>
                     Dejamos de crear "páginas bonitas" y construimos motores automáticos que te ahorran tiempo y generan un ROI real, para que te enfoques en tus clientes, no en el trabajo administrativo.
@@ -341,7 +393,6 @@
             <div class="container reveal">
                 <h2 class="reveal">Convirtiendo el Ruido en Resultados Medibles</h2>
                 <div class="credibility-container">
-                    <!-- SEO MEJORA: Alt tag más descriptivo -->
                     <img src="https://i.imgur.com/c4nlsC2.png" alt="Napoleon Baca - Estratega de Sistemas Web en Synta Studio" class="credibility-photo">
                     <div class="credibility-content">
                         <h3>De la Música al Marketing: Una Historia de Resultados</h3>
@@ -361,8 +412,6 @@
                             </div>
                         </div>
                         <p>Ahora, aplico esa misma disciplina de productor para que mis clientes conviertan su presencia online en su activo más rentable.</p>
-                        
-                        
                     </div>
                 </div>
             </div>
@@ -407,7 +456,6 @@
             <div class="container">
                 <div class="final-cta-grid">
                     <div class="cta-image-wrapper reveal">
-                        <!-- SEO MEJORA: Alt tag más descriptivo -->
                         <img src="https://i.imgur.com/ATLBNhv.png" alt="Mockup del PDF gratuito Auditoría Estratégica de Synta Studio" class="cta-book-mockup">
                     </div>
                     <div class="cta-content-wrapper reveal">
@@ -438,6 +486,7 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Script para el Header Scrolled
             const header = document.getElementById('mainHeader');
             if(header) {
                 window.addEventListener('scroll', function() {
@@ -448,6 +497,29 @@
                     }
                 });
             }
+
+            // Script para el menú móvil (hamburguesa)
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            const mainNav = document.getElementById('main-nav');
+            if (mobileNavToggle && mainNav) {
+                mobileNavToggle.addEventListener('click', () => {
+                    document.body.classList.toggle('nav-is-open');
+                    const isExpanded = mobileNavToggle.getAttribute('aria-expanded') === 'true';
+                    mobileNavToggle.setAttribute('aria-expanded', !isExpanded);
+                });
+
+                // Cerrar menú al hacer clic en un enlace
+                mainNav.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (document.body.classList.contains('nav-is-open')) {
+                            document.body.classList.remove('nav-is-open');
+                            mobileNavToggle.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
+            }
+
+            // Script para animaciones de revelado (reveal)
             const revealElements = document.querySelectorAll('.reveal');
             if(revealElements.length > 0) {
                 const observer = new IntersectionObserver((entries) => {
@@ -460,6 +532,8 @@
                 }, { threshold: 0.1 });
                 revealElements.forEach(element => observer.observe(element));
             }
+
+            // Script para el acordeón de FAQ
             const faqItems = document.querySelectorAll('.faq-item');
             if(faqItems.length > 0) {
                 faqItems.forEach(item => {
@@ -475,6 +549,8 @@
                     }
                 });
             }
+
+            // Script para el formulario de contacto
             const leadForm = document.getElementById('leadForm');
             if(leadForm) {
                 const submitBtn = document.getElementById('submitBtn');
@@ -494,8 +570,8 @@
                     })
                     .then(response => {
                         if (response.ok) {
-                            window.location.href = 'gracias.html'; // Redirige a gracias.html
-                            return response.json(); // Opcional: procesar la respuesta si es necesario
+                            window.location.href = 'gracias.html';
+                            return response.json();
                         }
                         return response.json().then(data => {
                             if (data && data.errors) throw new Error(data.errors.map(error => error.message).join(", "));
@@ -505,9 +581,9 @@
                     .catch(error => {
                         formMessage.textContent = error.message || 'Hubo un error. Por favor, inténtalo de nuevo.';
                         formMessage.className = 'form-message error';
+                        formMessage.style.display = 'block';
                     })
                     .finally(() => {
-                        formMessage.style.display = 'block';
                         submitBtn.disabled = false;
                         submitBtn.textContent = originalBtnText;
                     });

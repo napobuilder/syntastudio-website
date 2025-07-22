@@ -6,11 +6,13 @@
     <title>Synta Lab - Baúl de Prompts</title>
     <meta name="robots" content="noindex, nofollow">
 
+    <!-- Font Awesome para Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <!-- Optimización de Carga de Fuentes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -20,6 +22,7 @@
             --color-fondo-seccion: #f8f9fa;
             --color-texto-principal: #1a1a1a;
             --color-texto-secundario: #4a4a4a;
+            --color-borde-suave: #e9ecef;
             --fuente-principal: 'Poppins', sans-serif;
         }
         html { scroll-behavior: smooth; }
@@ -28,19 +31,23 @@
             margin: 0;
             background-color: var(--color-fondo);
             color: var(--color-texto-principal);
-            line-height: 1.7;
+            line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
         *, *::before, *::after { box-sizing: border-box; }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
         h1, h2, h3, h4 { font-weight: 600; line-height: 1.3; margin-top: 0; margin-bottom: 0.75em; }
+        
         h1 {
             font-size: clamp(2.4rem, 5vw, 3.5rem);
             background: linear-gradient(90deg, var(--color-primario), var(--color-secundario));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
         }
-        h2 { font-size: clamp(2rem, 4vw, 2.8rem); color: var(--color-texto-principal); text-align: center; margin-bottom: 25px; }
+        h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); color: var(--color-texto-principal); text-align: center; margin-bottom: 25px; }
         p { font-size: 1.05rem; color: var(--color-texto-secundario); margin-top: 0; margin-bottom: 1.25em; max-width: 65ch; }
         
         .cta-button {
@@ -65,130 +72,237 @@
         }
         .logo span { font-weight: 700; font-size: 1.5rem; color: var(--color-texto-principal); }
 
-        /* Estilos específicos de Synta Lab */
-        .synta-lab-section {
-            padding: 80px 0;
-            text-align: center;
-        }
+        /* --- ESTILOS DE SYNTA LAB --- */
+        .synta-lab-section { padding: 60px 0; }
+        .synta-lab-section .container { max-width: 900px; }
+        
+        /* Formulario de Login */
+        .login-form-wrapper { text-align: center; }
         .login-form {
             max-width: 400px;
-            margin: 50px auto;
+            margin: 40px auto;
             padding: 40px;
             background-color: var(--color-fondo-seccion);
             border-radius: 12px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            text-align: center;
         }
-        .login-form input[type="password"] {
-            width: calc(100% - 20px);
-            padding: 12px 10px;
+        .login-form h2 {
+            line-height: 1.4;
+            font-size: clamp(1.6rem, 4vw, 2.2rem);
+        }
+        .login-title-highlight {
+            background: linear-gradient(90deg, var(--color-primario), var(--color-secundario));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .login-form input {
+            width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ddd;
+            border-radius: 8px; font-size: 1rem; font-family: var(--fuente-principal);
+        }
+        .login-form .cta-button { width: 100%; }
+        .login-error { color: #e74c3c; margin-top: 15px; font-weight: 500; }
+
+        /* Sección de Prompts */
+        .prompts-header { text-align: center; margin-bottom: 40px; }
+        .prompts-header .back-link {
+            display: inline-block;
             margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
+            color: var(--color-texto-secundario);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
         }
-        .login-form button {
+        .prompts-header .back-link:hover { color: var(--color-primario); }
+        .prompts-header .back-link i { margin-right: 8px; }
+        .prompts-header p { max-width: 60ch; margin: 15px auto 0; }
+        
+        .search-and-filters { margin-bottom: 40px; }
+        .search-bar {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .search-bar i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+        }
+        #search-input {
             width: 100%;
-            padding: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border: none;
-            border-radius: 8px;
+            padding: 15px 15px 15px 45px;
+            font-size: 1rem;
+            border-radius: 50px;
+            border: 1px solid var(--color-borde-suave);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        #search-input:focus {
+            outline: none;
+            border-color: var(--color-primario);
+            box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.2);
+        }
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        .filter-btn {
+            padding: 8px 20px;
+            border: 1px solid var(--color-borde-suave);
+            background-color: var(--color-fondo);
+            color: var(--color-texto-secundario);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .filter-btn:hover {
+            background-color: var(--color-borde-suave);
+            color: var(--color-texto-principal);
+        }
+        .filter-btn.active {
             background: linear-gradient(90deg, var(--color-primario), var(--color-secundario));
             color: white;
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s ease;
+            border-color: var(--color-primario);
         }
-        .login-form button:hover {
-            background: linear-gradient(90deg, var(--color-secundario), var(--color-primario));
-            transform: translateY(-2px);
-        }
-        .login-error {
-            color: #e74c3c;
-            margin-top: 15px;
-            font-weight: 500;
-        }
-
+        
         .prompts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-            text-align: left;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
         }
         .prompt-card {
-            background-color: var(--color-fondo-seccion);
-            padding: 30px;
+            background-color: var(--color-fondo);
+            border: 1px solid var(--color-borde-suave);
             border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
-            border: 1px solid #eee;
+            padding: 25px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .prompt-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.07);
+        }
+        .prompt-card-content { flex-grow: 1; }
+        .prompt-card .category {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-primario);
+            margin-bottom: 8px;
         }
         .prompt-card h3 {
-            font-size: 1.6rem;
-            color: var(--color-primario);
-            margin-bottom: 15px;
+            font-size: 1.25rem;
+            color: var(--color-texto-principal);
+            margin-bottom: 10px;
         }
-        .prompt-card pre {
-            background-color: #e9ecef;
-            padding: 15px;
+        .prompt-card p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            max-width: 100%;
+        }
+        .prompt-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 15px; border-top: 1px solid var(--color-borde-suave); }
+        .tag {
+            background-color: var(--color-borde-suave);
+            color: var(--color-texto-secundario);
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .prompt-card .view-prompt-btn {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            background-color: var(--color-texto-principal);
+            color: white;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .prompt-card .view-prompt-btn:hover {
+            background-color: #000;
+            transform: translateY(-2px);
+        }
+        
+        /* --- MODAL (VENTANA EMERGENTE) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        .modal-overlay.show { opacity: 1; visibility: visible; }
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+        .modal-overlay.show .modal-content { transform: scale(1); }
+        .modal-close-btn {
+            position: absolute;
+            top: 15px; right: 15px;
+            background: none; border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #aaa;
+            transition: color 0.3s;
+        }
+        .modal-close-btn:hover { color: #000; }
+        .modal-content h3 { font-size: 1.5rem; margin-bottom: 20px; }
+        .modal-content pre {
+            background-color: var(--color-fondo-seccion);
+            padding: 20px;
             border-radius: 8px;
             white-space: pre-wrap;
             word-break: break-word;
             font-family: 'Courier New', Courier, monospace;
-            font-size: 0.95rem;
-            margin-bottom: 15px;
-            border: 1px solid #dee2e6;
-            position: relative;
+            font-size: 1rem;
+            border: 1px solid var(--color-borde-suave);
+            max-height: 50vh;
+            overflow-y: auto;
         }
-        .prompt-card .copy-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: var(--color-primario);
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            opacity: 0.8;
-            transition: opacity 0.2s ease;
-        }
-        .prompt-card .copy-btn:hover {
-            opacity: 1;
-        }
-        .prompt-card p {
-            font-size: 0.95rem;
-            color: var(--color-texto-secundario);
-            margin-bottom: 10px;
-        }
-        .prompt-card .actions {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .prompt-card .actions .cta-button {
-            padding: 10px 20px;
-            font-size: 0.9rem;
-            border-radius: 8px;
-            flex-grow: 1;
-            text-align: center;
-        }
-        .prompt-card .actions .cta-button.secondary {
-            background: #6c757d; /* Un color secundario para el botón de descarga */
-        }
-        .prompt-card .actions .cta-button.secondary:hover {
-            background: #5a6268;
-            box-shadow: 0 8px 25px rgba(108, 117, 125, 0.3);
-        }
+        .modal-copy-btn { margin-top: 20px; width: 100%; }
 
+        /* --- OTROS ESTILOS --- */
         .main-footer {
             background-color: var(--color-fondo-seccion); text-align: center;
             padding: 40px 0; font-size: 0.9rem; color: var(--color-texto-secundario);
         }
+        .main-footer p { margin: 0 auto; }
+
+        .notification {
+            position: fixed; bottom: 30px; left: 50%;
+            transform: translateX(-50%) translateY(200%);
+            background-color: var(--color-primario); color: white;
+            padding: 15px 30px; border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 2000; opacity: 0; visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .notification.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
     </style>
 </head>
 <body>
@@ -205,89 +319,40 @@
     <main>
         <section class="synta-lab-section">
             <div class="container">
-                <h1>Synta Lab</h1>
-                <p>Tu baúl exclusivo de prompts de ingeniería de contexto.</p>
+                
+                <!-- SECCIÓN DE LOGIN -->
+                <div id="login-section" class="login-form-wrapper">
+                    <form class="login-form" action="https://formspree.io/f/xanbewea" method="POST">
+                        <h2>Acceso a<br><span class="login-title-highlight">Synta Lab</span></h2>
+                        <p>Introduce tus datos y la contraseña para acceder a los prompts.</p>
+                        <input type="text" name="Nombre Completo" placeholder="Nombre Completo" required>
+                        <input type="email" name="Correo Electronico" placeholder="Correo Electrónico" required>
+                        <input type="password" id="password-input" name="Contrasena" placeholder="Contraseña" required>
+                        <button type="submit" class="cta-button">Acceder</button>
+                        <p id="login-error" class="login-error" style="display: none;">Contraseña incorrecta. Inténtalo de nuevo.</p>
+                    </form>
+                </div>
 
-                <form id="login-section" class="login-form" action="https://formspree.io/f/xanbewea" method="POST">
-                    <h2>Acceso Restringido</h2>
-                    <p>Introduce tus datos y la contraseña para acceder a los prompts.</p>
-                    <input type="text" id="full-name-input" name="Nombre Completo" placeholder="Nombre Completo" required>
-                    <input type="email" id="email-input" name="Correo Electronico" placeholder="Correo Electrónico" required>
-                    <input type="password" id="password-input" name="Contrasena" placeholder="Contraseña">
-                    <button type="submit">Acceder</button>
-                    <p id="login-error" class="login-error" style="display: none;">Contraseña incorrecta. Inténtalo de nuevo.</p>
-                </form>
-
+                <!-- SECCIÓN DE PROMPTS (OCULTA INICIALMENTE) -->
                 <div id="prompts-section" style="display: none;">
-                    <div class="prompts-grid">
-                        <!-- Placeholder para Prompt 1 -->
-                        <div class="prompt-card">
-                            <div>
-                                <h3>Prompt: Generador de Ideas para Contenido Viral</h3>
-                                <pre id="prompt1-text">Actúa como un experto en marketing viral y creador de contenido. Tu objetivo es generar 5 ideas de contenido altamente compartible para [Tu Nicho/Tema]. Para cada idea, incluye:
-1. Título atractivo.
-2. Formato (video corto, infografía, hilo de Twitter, etc.).
-3. Gancho emocional o cognitivo (sorpresa, humor, indignación, utilidad, etc.).
-4. Call to action (CTA) para fomentar la interacción.
-5. Plataformas ideales para su distribución.
-Considera las tendencias actuales y lo que resuena con la audiencia de [Tu Nicho/Tema].</pre>
-                                <button class="copy-btn" onclick="copyToClipboard('prompt1-text')">Copiar</button>
-                                <p><strong>Función:</strong> Ayuda a desbloquear la creatividad y generar ideas de contenido que tienen potencial para volverse virales, adaptadas a un nicho específico.</p>
-                                <p><strong>Uso:</strong> Ideal para creadores de contenido, marketers, o emprendedores que buscan ideas frescas y efectivas para sus redes sociales o blogs. Sustituye `[Tu Nicho/Tema]` por tu área de interés.</p>
-                            </div>
-                            <div class="actions">
-                                <a href="#" class="cta-button">Copiar Prompt</a>
-                                <a href="#" class="cta-button secondary">Descargar PDF</a>
-                            </div>
+                    <div class="prompts-header">
+                        <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Volver al Inicio</a>
+                        <h1>Synta Lab</h1>
+                        <p>Un arsenal de prompts para construir pensamiento estratégico. Busca, filtra y encuentra la herramienta precisa para tu objetivo.</p>
+                    </div>
+
+                    <div class="search-and-filters">
+                        <div class="search-bar">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="search-input" placeholder="Buscar por título, descripción o etiqueta...">
                         </div>
-
-                        <!-- Placeholder para Prompt 2 -->
-                        <div class="prompt-card">
-                            <div>
-                                <h3>Prompt: Estructurador de Argumentos Persuasivos</h3>
-                                <pre id="prompt2-text">Eres un experto en retórica y persuasión. Tu tarea es ayudarme a estructurar un argumento convincente para [Tu Objetivo de Persuasión]. Utiliza la siguiente estructura:
-1.  **Atención:** Cómo captar la atención de la audiencia.
-2.  **Necesidad:** Identifica el problema o la necesidad que tu argumento resuelve.
-3.  **Solución:** Presenta tu propuesta como la solución.
-4.  **Beneficios:** Detalla los beneficios específicos y tangibles.
-5.  **Objeciones:** Anticipa y refuta posibles objeciones.
-6.  **Llamada a la Acción:** Qué quieres que la audiencia haga a continuación.
-Aplica esta estructura para un público de [Tu Audiencia Objetivo] y un tono [Tono Deseado].</pre>
-                                <button class="copy-btn" onclick="copyToClipboard('prompt2-text')">Copiar</button>
-                                <p><strong>Función:</strong> Diseñado para construir argumentos sólidos y persuasivos para ventas, presentaciones, discursos o cualquier situación donde necesites convencer a alguien.</p>
-                                <p><strong>Uso:</strong> Rellena `[Tu Objetivo de Persuasión]`, `[Tu Audiencia Objetivo]` y `[Tono Deseado]` para obtener una estructura adaptada a tu necesidad. Útil para copywriters, vendedores, oradores.</p>
-                            </div>
-                            <div class="actions">
-                                <a href="#" class="cta-button">Copiar Prompt</a>
-                                <a href="#" class="cta-button secondary">Descargar PDF</a>
-                            </div>
+                        <div id="filter-buttons-container" class="filter-buttons">
+                            <!-- Los botones de filtro se generarán aquí con JS -->
                         </div>
+                    </div>
 
-                        <!-- Placeholder para Prompt 3 -->
-                        <div class="prompt-card">
-                            <div>
-                                <h3>Prompt: Creador de Perfiles de Cliente Ideal (Buyer Persona)</h3>
-                                <pre id="prompt3-text">Actúa como un estratega de marketing especializado en la creación de buyer personas detallados. Necesito que me ayudes a construir un perfil de mi cliente ideal para [Tu Producto/Servicio]. Incluye los siguientes elementos:
-1.  **Datos Demográficos:** Edad, género, ubicación, ingresos, ocupación.
-2.  **Psicografía:** Intereses, valores, personalidad, estilo de vida.
-3.  **Objetivos y Desafíos:** Qué quieren lograr y qué obstáculos enfrentan.
-4.  **Puntos de Dolor:** Qué problemas específicos les causa frustración.
-5.  **Fuentes de Información:** Dónde buscan soluciones o información.
-6.  **Objeciones Comunes:** Qué dudas o resistencias tienen antes de comprar.
-7.  **Cita Representativa:** Una frase que resuma su mentalidad.
-Genera este perfil basándote en la información que te proporcionaré sobre [Tu Producto/Servicio] y su mercado.</pre>
-                                <button class="copy-btn" onclick="copyToClipboard('prompt3-text')">Copiar</button>
-                                <p><strong>Función:</strong> Permite definir con precisión a tu cliente ideal, lo que es fundamental para crear mensajes de marketing efectivos y desarrollar productos que realmente resuelvan problemas.</p>
-                                <p><strong>Uso:</strong> Sustituye `[Tu Producto/Servicio]` y `[Tu Producto/Servicio] y su mercado` con la información relevante. Esencial para cualquier estrategia de marketing o desarrollo de negocio.</p>
-                            </div>
-                            <div class="actions">
-                                <a href="#" class="cta-button">Copiar Prompt</a>
-                                <a href="#" class="cta-button secondary">Descargar PDF</a>
-                            </div>
-                        </div>
-
-                        <!-- Puedes añadir más prompts aquí siguiendo el mismo formato -->
-
+                    <div id="prompts-grid-container" class="prompts-grid">
+                        <!-- Las tarjetas de prompts se generarán aquí con JS -->
                     </div>
                 </div>
             </div>
@@ -300,74 +365,194 @@ Genera este perfil basándote en la información que te proporcionaré sobre [Tu
         </div>
     </footer>
 
+    <!-- MODAL PARA VER PROMPT -->
+    <div id="prompt-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-btn" onclick="closePromptModal()">&times;</button>
+            <h3 id="modal-title"></h3>
+            <pre id="modal-text"></pre>
+            <button id="modal-copy-btn" class="cta-button modal-copy-btn">Copiar Prompt</button>
+        </div>
+    </div>
+
+    <!-- NOTIFICACIÓN PERSONALIZADA -->
+    <div id="notification" class="notification"></div>
+
     <script>
+        // --- BASE DE DATOS DE PROMPTS ---
+        const promptsData = [
+            {
+                category: "Marketing y Ventas",
+                title: "Generador de Ideas Virales",
+                description: "Genera 5 ideas de contenido altamente compartible para un nicho, incluyendo formato, gancho y CTA.",
+                tags: ["Contenido", "Marketing", "Redes Sociales", "Viral"],
+                promptText: `Actúa como un experto en marketing viral y creador de contenido. Tu objetivo es generar 5 ideas de contenido altamente compartible para [Tu Nicho/Tema]. Para cada idea, incluye:\n1. Título atractivo.\n2. Formato (video corto, infografía, hilo de Twitter, etc.).\n3. Gancho emocional o cognitivo (sorpresa, humor, indignación, utilidad, etc.).\n4. Call to action (CTA) para fomentar la interacción.\n5. Plataformas ideales para su distribución.\nConsidera las tendencias actuales y lo que resuena con la audiencia de [Tu Nicho/Tema].`
+            },
+            {
+                category: "Estrategia y Negocio",
+                title: "Argumentos Persuasivos",
+                description: "Estructura un argumento convincente para cualquier objetivo, desde ventas hasta presentaciones.",
+                tags: ["Copywriting", "Persuasión", "Ventas", "Discurso"],
+                promptText: `Eres un experto en retórica y persuasión. Tu tarea es ayudarme a estructurar un argumento convincente para [Tu Objetivo de Persuasión]. Utiliza la siguiente estructura:\n1.  **Atención:** Cómo captar la atención de la audiencia.\n2.  **Necesidad:** Identifica el problema o la necesidad que tu argumento resuelve.\n3.  **Solución:** Presenta tu propuesta como la solución.\n4.  **Beneficios:** Detalla los beneficios específicos y tangibles.\n5.  **Objeciones:** Anticipa y refuta posibles objeciones.\n6.  **Llamada a la Acción:** Qué quieres que la audiencia haga a continuación.\nAplica esta estructura para un público de [Tu Audiencia Objetivo] y un tono [Tono Deseado].`
+            },
+            {
+                category: "Marketing y Ventas",
+                title: "Creador de Buyer Persona",
+                description: "Construye un perfil detallado de tu cliente ideal para afinar tu estrategia de marketing y producto.",
+                tags: ["Marketing", "Estrategia", "Cliente Ideal", "Investigación"],
+                promptText: `Actúa como un estratega de marketing especializado en la creación de buyer personas detallados. Necesito que me ayudes a construir un perfil de mi cliente ideal para [Tu Producto/Servicio]. Incluye los siguientes elementos:\n1.  **Datos Demográficos:** Edad, género, ubicación, ingresos, ocupación.\n2.  **Psicografía:** Intereses, valores, personalidad, estilo de vida.\n3.  **Objetivos y Desafíos:** Qué quieren lograr y qué obstáculos enfrentan.\n4.  **Puntos de Dolor:** Qué problemas específicos les causa frustración.\n5.  **Fuentes de Información:** Dónde buscan soluciones o información.\n6.  **Objeciones Comunes:** Qué dudas o resistencias tienen antes de comprar.\n7.  **Cita Representativa:** Una frase que resuma su mentalidad.\nGenera este perfil basándote en la información que te proporcionaré sobre [Tu Producto/Servicio] y su mercado.`
+            }
+        ];
+
         document.addEventListener('DOMContentLoaded', () => {
-            const loginForm = document.getElementById('login-section');
-            const fullNameInput = document.getElementById('full-name-input');
-            const emailInput = document.getElementById('email-input');
-            const passwordInput = document.getElementById('password-input');
+            
+            // --- LÓGICA DE LOGIN ---
+            const loginSection = document.getElementById('login-section');
             const promptsSection = document.getElementById('prompts-section');
+            const loginForm = loginSection.querySelector('.login-form');
+            const passwordInput = document.getElementById('password-input');
             const loginError = document.getElementById('login-error');
             const correctPassword = "syntalabcontext";
 
             loginForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-
                 if (passwordInput.value === correctPassword) {
-                    // Enviar datos a Formspree
+                    const submitButton = loginForm.querySelector('.cta-button');
+                    submitButton.disabled = true;
+                    submitButton.textContent = 'Enviando...';
+                    
                     const formData = new FormData(loginForm);
                     try {
                         const response = await fetch(loginForm.action, {
-                            method: loginForm.method,
-                            body: formData,
-                            headers: {
-                                'Accept': 'application/json'
-                            }
+                            method: loginForm.method, body: formData, headers: { 'Accept': 'application/json' }
                         });
-
                         if (response.ok) {
-                            loginForm.style.display = 'none';
+                            loginSection.style.display = 'none';
                             promptsSection.style.display = 'block';
-                            loginError.style.display = 'none';
-                            // Opcional: Limpiar los campos del formulario después del envío exitoso
-                            fullNameInput.value = '';
-                            emailInput.value = '';
-                            passwordInput.value = '';
+                            initializePrompts();
                         } else {
-                            // Manejar errores de Formspree
-                            const data = await response.json();
-                            if (data && data.errors) {
-                                loginError.textContent = data.errors.map(error => error.message).join(", ");
-                            } else {
-                                loginError.textContent = 'Hubo un problema al enviar tus datos. Inténtalo de nuevo.';
-                            }
-                            loginError.style.display = 'block';
+                            throw new Error('Error al enviar el formulario.');
                         }
                     } catch (error) {
-                        loginError.textContent = 'Error de conexión. Por favor, verifica tu internet.';
+                        loginError.textContent = 'Error de conexión. Mostrando prompts de todas formas.';
                         loginError.style.display = 'block';
+                        loginSection.style.display = 'none';
+                        promptsSection.style.display = 'block';
+                        initializePrompts();
                     }
                 } else {
                     loginError.style.display = 'block';
+                    passwordInput.focus();
                 }
             });
+
+            // --- LÓGICA DE LA SECCIÓN DE PROMPTS ---
+            const searchInput = document.getElementById('search-input');
+            const filtersContainer = document.getElementById('filter-buttons-container');
+            const gridContainer = document.getElementById('prompts-grid-container');
+
+            function initializePrompts() {
+                renderFilterButtons();
+                renderPromptCards(promptsData);
+                
+                searchInput.addEventListener('input', handleSearchAndFilter);
+                filtersContainer.addEventListener('click', handleFilterClick);
+            }
+            
+            function handleSearchAndFilter() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const activeFilter = filtersContainer.querySelector('.active').dataset.filter;
+                
+                let filteredPrompts = promptsData.filter(prompt => {
+                    const matchesCategory = activeFilter === 'Todos' || prompt.category === activeFilter;
+                    const matchesSearch = searchTerm === '' ||
+                        prompt.title.toLowerCase().includes(searchTerm) ||
+                        prompt.description.toLowerCase().includes(searchTerm) ||
+                        prompt.tags.some(tag => tag.toLowerCase().includes(searchTerm));
+                    return matchesCategory && matchesSearch;
+                });
+                renderPromptCards(filteredPrompts);
+            }
+
+            function handleFilterClick(e) {
+                if (e.target.classList.contains('filter-btn')) {
+                    filtersContainer.querySelector('.active').classList.remove('active');
+                    e.target.classList.add('active');
+                    handleSearchAndFilter();
+                }
+            }
+
+            function renderFilterButtons() {
+                const categories = ['Todos', ...new Set(promptsData.map(p => p.category))];
+                filtersContainer.innerHTML = categories.map(cat => 
+                    `<button class="filter-btn ${cat === 'Todos' ? 'active' : ''}" data-filter="${cat}">${cat}</button>`
+                ).join('');
+            }
+
+            function renderPromptCards(prompts) {
+                gridContainer.innerHTML = prompts.map(prompt => `
+                    <div class="prompt-card">
+                        <div class="prompt-card-content">
+                            <div class="category">${prompt.category}</div>
+                            <h3>${prompt.title}</h3>
+                            <p>${prompt.description}</p>
+                        </div>
+                        <div class="prompt-tags">
+                            ${prompt.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                        <button class="view-prompt-btn" onclick='openPromptModal(${JSON.stringify(prompt)})'>Ver Prompt</button>
+                    </div>
+                `).join('');
+                if (prompts.length === 0) {
+                    gridContainer.innerHTML = '<p>No se encontraron prompts que coincidan con tu búsqueda.</p>';
+                }
+            }
         });
 
-        function copyToClipboard(elementId) {
-            const element = document.getElementById(elementId);
-            const textToCopy = element.innerText;
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                alert('¡Prompt copiado al portapapeles!');
-            }).catch(err => {
-                console.error('Error al copiar el texto: ', err);
-                alert('No se pudo copiar el prompt. Por favor, cópialo manualmente.');
-            });
+        // --- LÓGICA DEL MODAL ---
+        const modal = document.getElementById('prompt-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalText = document.getElementById('modal-text');
+        const modalCopyBtn = document.getElementById('modal-copy-btn');
+
+        window.openPromptModal = (prompt) => {
+            modalTitle.textContent = prompt.title;
+            modalText.textContent = prompt.promptText;
+            modalCopyBtn.onclick = () => copyToClipboard(prompt.promptText, modalCopyBtn);
+            modal.classList.add('show');
         }
-        // Placeholder para la función de descarga de PDF
-        // La generación de PDF en el navegador es compleja y requeriría una librería JS.
-        // Por ahora, este botón es un placeholder.
-        function downloadPdf(promptId) {
-            alert('La función de descarga de PDF está en desarrollo. Por favor, copia el prompt manualmente por ahora.');
+
+        window.closePromptModal = () => {
+            modal.classList.remove('show');
+        }
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closePromptModal();
+            }
+        });
+
+        // --- FUNCIONES UTILITARIAS ---
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            if (!notification) return;
+            notification.textContent = message;
+            notification.classList.add('show');
+            setTimeout(() => { notification.classList.remove('show'); }, 3000);
+        }
+
+        function copyToClipboard(textToCopy, buttonElement) {
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showNotification('¡Prompt copiado!');
+                if (buttonElement) {
+                    const originalText = buttonElement.textContent;
+                    buttonElement.textContent = '¡Copiado!';
+                    setTimeout(() => { buttonElement.textContent = originalText; }, 2000);
+                }
+            }).catch(err => {
+                console.error('Error al copiar: ', err);
+                showNotification('Error al copiar. Inténtalo manualmente.');
+            });
         }
     </script>
     
