@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synta Lab - Baúl de Prompts</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Optimización de Carga de Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
+    
+    <style>
+        :root {
+            --color-primario: #6a11cb;
+            --color-secundario: #2575fc;
+            --color-fondo: #ffffff;
+            --color-fondo-seccion: #f8f9fa;
+            --color-texto-principal: #1a1a1a;
+            --color-texto-secundario: #4a4a4a;
+            --fuente-principal: 'Poppins', sans-serif;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--fuente-principal);
+            margin: 0;
+            background-color: var(--color-fondo);
+            color: var(--color-texto-principal);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+        h1, h2, h3, h4 { font-weight: 600; line-height: 1.3; margin-top: 0; margin-bottom: 0.75em; }
+        h1 {
+            font-size: clamp(2.4rem, 5vw, 3.5rem);
+            background: linear-gradient(90deg, var(--color-primario), var(--color-secundario));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;
+        }
+        h2 { font-size: clamp(2rem, 4vw, 2.8rem); color: var(--color-texto-principal); text-align: center; margin-bottom: 25px; }
+        p { font-size: 1.05rem; color: var(--color-texto-secundario); margin-top: 0; margin-bottom: 1.25em; max-width: 65ch; }
+        
+        .cta-button {
+            display: inline-block; font-size: 1.1rem; font-weight: 600; text-decoration: none; color: white !important;
+            padding: 15px 35px; border-radius: 50px; border: none; cursor: pointer;
+            background: linear-gradient(90deg, var(--color-primario), var(--color-secundario), var(--color-primario));
+            background-size: 200% 100%;
+            transition: background-position 0.5s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .cta-button:hover { background-position: 100% 0; transform: translateY(-3px); box-shadow: 0 8px 25px rgba(106, 17, 203, 0.3); }
+
+        .main-header {
+            background: var(--color-fondo); padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .header-container { display: flex; justify-content: center; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-icon-wrapper {
+            width: 35px; height: 35px; background: linear-gradient(90deg, var(--color-primario), var(--color-secundario));
+            -webkit-mask: url(https://i.imgur.com/vgnuj55.png) no-repeat center / contain;
+            mask: url(https://i.imgur.com/vgnuj55.png) no-repeat center / contain;
+        }
+        .logo span { font-weight: 700; font-size: 1.5rem; color: var(--color-texto-principal); }
+
+        /* Estilos específicos de Synta Lab */
+        .synta-lab-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+        .login-form {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: var(--color-fondo-seccion);
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+        .login-form input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 12px 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        .login-form button {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(90deg, var(--color-primario), var(--color-secundario));
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        .login-form button:hover {
+            background: linear-gradient(90deg, var(--color-secundario), var(--color-primario));
+            transform: translateY(-2px);
+        }
+        .login-error {
+            color: #e74c3c;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+
+        .prompts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+            text-align: left;
+        }
+        .prompt-card {
+            background-color: var(--color-fondo-seccion);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .prompt-card h3 {
+            font-size: 1.6rem;
+            color: var(--color-primario);
+            margin-bottom: 15px;
+        }
+        .prompt-card pre {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            word-break: break-word;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            border: 1px solid #dee2e6;
+            position: relative;
+        }
+        .prompt-card .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--color-primario);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            opacity: 0.8;
+            transition: opacity 0.2s ease;
+        }
+        .prompt-card .copy-btn:hover {
+            opacity: 1;
+        }
+        .prompt-card p {
+            font-size: 0.95rem;
+            color: var(--color-texto-secundario);
+            margin-bottom: 10px;
+        }
+        .prompt-card .actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .prompt-card .actions .cta-button {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            flex-grow: 1;
+            text-align: center;
+        }
+        .prompt-card .actions .cta-button.secondary {
+            background: #6c757d; /* Un color secundario para el botón de descarga */
+        }
+        .prompt-card .actions .cta-button.secondary:hover {
+            background: #5a6268;
+            box-shadow: 0 8px 25px rgba(108, 117, 125, 0.3);
+        }
+
+        .main-footer {
+            background-color: var(--color-fondo-seccion); text-align: center;
+            padding: 40px 0; font-size: 0.9rem; color: var(--color-texto-secundario);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon-wrapper"></div>
+                <span>Synta Studio</span>
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <section class="synta-lab-section">
+            <div class="container">
+                <h1>Synta Lab</h1>
+                <p>Tu baúl exclusivo de prompts de ingeniería de contexto.</p>
+
+                <div id="login-section" class="login-form">
+                    <h2>Acceso Restringido</h2>
+                    <p>Introduce la contraseña para acceder a los prompts.</p>
+                    <input type="password" id="password-input" placeholder="Contraseña">
+                    <button onclick="checkPassword()">Acceder</button>
+                    <p id="login-error" class="login-error" style="display: none;">Contraseña incorrecta. Inténtalo de nuevo.</p>
+                </div>
+
+                <div id="prompts-section" style="display: none;">
+                    <div class="prompts-grid">
+                        <!-- Placeholder para Prompt 1 -->
+                        <div class="prompt-card">
+                            <div>
+                                <h3>Prompt: Generador de Ideas para Contenido Viral</h3>
+                                <pre id="prompt1-text">Actúa como un experto en marketing viral y creador de contenido. Tu objetivo es generar 5 ideas de contenido altamente compartible para [Tu Nicho/Tema]. Para cada idea, incluye:
+1. Título atractivo.
+2. Formato (video corto, infografía, hilo de Twitter, etc.).
+3. Gancho emocional o cognitivo (sorpresa, humor, indignación, utilidad, etc.).
+4. Call to action (CTA) para fomentar la interacción.
+5. Plataformas ideales para su distribución.
+Considera las tendencias actuales y lo que resuena con la audiencia de [Tu Nicho/Tema].</pre>
+                                <button class="copy-btn" onclick="copyToClipboard('prompt1-text')">Copiar</button>
+                                <p><strong>Función:</strong> Ayuda a desbloquear la creatividad y generar ideas de contenido que tienen potencial para volverse virales, adaptadas a un nicho específico.</p>
+                                <p><strong>Uso:</strong> Ideal para creadores de contenido, marketers, o emprendedores que buscan ideas frescas y efectivas para sus redes sociales o blogs. Sustituye `[Tu Nicho/Tema]` por tu área de interés.</p>
+                            </div>
+                            <div class="actions">
+                                <a href="#" class="cta-button">Copiar Prompt</a>
+                                <a href="#" class="cta-button secondary">Descargar PDF</a>
+                            </div>
+                        </div>
+
+                        <!-- Placeholder para Prompt 2 -->
+                        <div class="prompt-card">
+                            <div>
+                                <h3>Prompt: Estructurador de Argumentos Persuasivos</h3>
+                                <pre id="prompt2-text">Eres un experto en retórica y persuasión. Tu tarea es ayudarme a estructurar un argumento convincente para [Tu Objetivo de Persuasión]. Utiliza la siguiente estructura:
+1.  **Atención:** Cómo captar la atención de la audiencia.
+2.  **Necesidad:** Identifica el problema o la necesidad que tu argumento resuelve.
+3.  **Solución:** Presenta tu propuesta como la solución.
+4.  **Beneficios:** Detalla los beneficios específicos y tangibles.
+5.  **Objeciones:** Anticipa y refuta posibles objeciones.
+6.  **Llamada a la Acción:** Qué quieres que la audiencia haga a continuación.
+Aplica esta estructura para un público de [Tu Audiencia Objetivo] y un tono [Tono Deseado].</pre>
+                                <button class="copy-btn" onclick="copyToClipboard('prompt2-text')">Copiar</button>
+                                <p><strong>Función:</strong> Diseñado para construir argumentos sólidos y persuasivos para ventas, presentaciones, discursos o cualquier situación donde necesites convencer a alguien.</p>
+                                <p><strong>Uso:</strong> Rellena `[Tu Objetivo de Persuasión]`, `[Tu Audiencia Objetivo]` y `[Tono Deseado]` para obtener una estructura adaptada a tu necesidad. Útil para copywriters, vendedores, oradores.</p>
+                            </div>
+                            <div class="actions">
+                                <a href="#" class="cta-button">Copiar Prompt</a>
+                                <a href="#" class="cta-button secondary">Descargar PDF</a>
+                            </div>
+                        </div>
+
+                        <!-- Placeholder para Prompt 3 -->
+                        <div class="prompt-card">
+                            <div>
+                                <h3>Prompt: Creador de Perfiles de Cliente Ideal (Buyer Persona)</h3>
+                                <pre id="prompt3-text">Actúa como un estratega de marketing especializado en la creación de buyer personas detallados. Necesito que me ayudes a construir un perfil de mi cliente ideal para [Tu Producto/Servicio]. Incluye los siguientes elementos:
+1.  **Datos Demográficos:** Edad, género, ubicación, ingresos, ocupación.
+2.  **Psicografía:** Intereses, valores, personalidad, estilo de vida.
+3.  **Objetivos y Desafíos:** Qué quieren lograr y qué obstáculos enfrentan.
+4.  **Puntos de Dolor:** Qué problemas específicos les causa frustración.
+5.  **Fuentes de Información:** Dónde buscan soluciones o información.
+6.  **Objeciones Comunes:** Qué dudas o resistencias tienen antes de comprar.
+7.  **Cita Representativa:** Una frase que resuma su mentalidad.
+Genera este perfil basándote en la información que te proporcionaré sobre [Tu Producto/Servicio] y su mercado.</pre>
+                                <button class="copy-btn" onclick="copyToClipboard('prompt3-text')">Copiar</button>
+                                <p><strong>Función:</strong> Permite definir con precisión a tu cliente ideal, lo que es fundamental para crear mensajes de marketing efectivos y desarrollar productos que realmente resuelvan problemas.</p>
+                                <p><strong>Uso:</strong> Sustituye `[Tu Producto/Servicio]` y `[Tu Producto/Servicio] y su mercado` con la información relevante. Esencial para cualquier estrategia de marketing o desarrollo de negocio.</p>
+                            </div>
+                            <div class="actions">
+                                <a href="#" class="cta-button">Copiar Prompt</a>
+                                <a href="#" class="cta-button secondary">Descargar PDF</a>
+                            </div>
+                        </div>
+
+                        <!-- Puedes añadir más prompts aquí siguiendo el mismo formato -->
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Synta Studio. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        function checkPassword() {
+            const passwordInput = document.getElementById('password-input');
+            const loginSection = document.getElementById('login-section');
+            const promptsSection = document.getElementById('prompts-section');
+            const loginError = document.getElementById('login-error');
+            const correctPassword = "syntalabcontext";
+
+            if (passwordInput.value === correctPassword) {
+                loginSection.style.display = 'none';
+                promptsSection.style.display = 'block';
+                loginError.style.display = 'none';
+            } else {
+                loginError.style.display = 'block';
+            }
+        }
+
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const textToCopy = element.innerText;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert('¡Prompt copiado al portapapeles!');
+            }).catch(err => {
+                console.error('Error al copiar el texto: ', err);
+                alert('No se pudo copiar el prompt. Por favor, cópialo manualmente.');
+            });
+        }
+        // Placeholder para la función de descarga de PDF
+        // La generación de PDF en el navegador es compleja y requeriría una librería JS.
+        // Por ahora, este botón es un placeholder.
+        function downloadPdf(promptId) {
+            alert('La función de descarga de PDF está en desarrollo. Por favor, copia el prompt manualmente por ahora.');
+        }
+    </script>
+    
+</body>
+</html>
