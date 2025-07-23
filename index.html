@@ -15,31 +15,33 @@
     </script>
 
     <!-- SEO META TAGS OPTIMIZADOS -->
-    <title>Synta Studio | Sistemas Web para Captación de Clientes</title>
-    <meta name="description" content="Transformamos tu web en un motor de captación de clientes. Ideal para consultores y abogados que buscan un flujo predecible de prospectos cualificados sin perder tiempo.">
-    <meta name="keywords" content="captación de clientes online, sistemas web para abogados, marketing para consultores, embudos de venta, automatización de marketing, Synta Studio, Napoleon Baca, ROI digital">
+    <title>Synta Studio | Ecosistemas Digitales para Marcas Personales</title>
+    <meta name="description" content="Para Marcas Personales y Líderes de Pensamiento. Construimos el sistema de ventas que tus ideas merecen. Diagnóstico gratuito.">
+    <meta name="keywords" content="marcas personales, lideres de pensamiento, sistemas de ventas, copywriting, landing page, automatización, Synta Studio, Napoleon Baca">
     <meta name="author" content="Synta Studio">
 
     <!-- OPEN GRAPH / FACEBOOK META TAGS OPTIMIZADOS -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://syntastudio.com/">
-    <meta property="og:title" content="Synta Studio | Deja de Perseguir Clientes. Atraelos en Piloto Automático.">
-    <meta property="og:description" content="Construimos sistemas web automáticos para profesionales de servicio que quieren más clientes cualificados, no más trabajo administrativo.">
+    <meta property="og:title" content="Synta Studio | Tienes un mensaje increíble. Construyamos la máquina que lo venda por ti.">
+    <meta property="og:description" content="Para Marcas Personales y Líderes de Pensamiento. Construimos el sistema de ventas que tus ideas merecen. Diagnóstico gratuito.">
     <meta property="og:image" content="https://i.imgur.com/dncGO0c.png">
 
     <!-- TWITTER META TAGS OPTIMIZADOS -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://syntastudio.com/">
-    <meta property="twitter:title" content="Synta Studio | Deja de Perseguir Clientes. Atraelos en Piloto Automático.">
-    <meta property="twitter:description" content="Construimos sistemas web automáticos para profesionales de servicio que quieren más clientes cualificados, no más trabajo administrativo.">
+    <meta property="twitter:title" content="Synta Studio | Tienes un mensaje increíble. Construyamos la máquina que lo venda por ti.">
+    <meta property="twitter:description" content="Para Marcas Personales y Líderes de Pensamiento. Construimos el sistema de ventas que tus ideas merecen. Diagnóstico gratuito.">
     <meta property="twitter:image" content="https://i.imgur.com/dncGO0c.png">
 
     <!-- Optimización de Carga de Fuentes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- Font Awesome para Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
         :root {
             --color-primario: #6a11cb;
@@ -67,8 +69,9 @@
             font-size: clamp(2.4rem, 5vw, 3.5rem);
             background: linear-gradient(90deg, var(--color-primario), var(--color-secundario));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;
+            text-wrap: balance; /* Mejora el balance de líneas en navegadores compatibles */
         }
-        h2 { font-size: clamp(2rem, 4vw, 2.8rem); color: var(--color-texto-principal); text-align: center; margin-bottom: 25px; }
+        h2 { font-size: clamp(2rem, 4vw, 2.8rem); color: var(--color-texto-principal); text-align: center; margin-bottom: 25px; text-wrap: balance; }
         h3 { font-size: 1.4rem; color: var(--color-primario); }
         p { font-size: 1.05rem; color: var(--color-texto-secundario); margin-top: 0; margin-bottom: 1.25em; max-width: 65ch; }
         p:last-child { margin-bottom: 0; }
@@ -80,7 +83,7 @@
             background-size: 200% 100%;
             transition: background-position 0.5s ease, transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            white-space: nowrap; /* <-- SOLUCIÓN AL PROBLEMA DEL BOTÓN */
+            white-space: nowrap;
         }
         .cta-button:hover { background-position: 100% 0; transform: translateY(-3px); box-shadow: 0 8px 25px rgba(106, 17, 203, 0.3); }
         .main-header {
@@ -102,7 +105,6 @@
         .main-nav a:hover { color: var(--color-primario); }
         .nav-cta { padding: 12px 28px; font-size: 1rem; margin-left: 25px; }
         
-        /* ESTILOS PARA MENÚ MÓVIL (HAMBURGUESA) */
         .mobile-nav-toggle {
             display: none;
             position: relative;
@@ -137,7 +139,27 @@
         .problem-section, #el-sistema, #credibilidad, #faq { background-color: var(--color-fondo-seccion); }
         .problem-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
         .problem-card { background: var(--color-fondo); padding: 30px; border-left: 4px solid var(--color-primario); border-radius: 0 8px 8px 0; }
-        .problem-card h3 { color: var(--color-texto-principal); font-size: 1.3rem; }
+        
+        /* --- ESTILOS PARA JERARQUÍA DE ESCENARIOS --- */
+        .problem-card h3 {
+            color: var(--color-texto-principal);
+            font-size: 1.3rem;
+            line-height: 1.4;
+            font-weight: 500;
+        }
+        .problem-card h3 strong {
+            color: var(--color-primario);
+            font-weight: 700;
+        }
+        .problem-card h3 .small-parenthesis {
+            font-size: 0.85em;
+            font-weight: 400;
+            display: block;
+            margin-top: 5px;
+            color: var(--color-texto-secundario);
+        }
+        /* --- FIN DE ESTILOS PARA JERARQUÍA --- */
+        
         .problem-card p { max-width: 100%; }
         .features-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
         .feature-card {
@@ -147,19 +169,12 @@
         }
         .feature-card p { max-width: 100%; }
         .feature-card:hover { transform: translateY(-8px); box-shadow: 0 12px 35px rgba(0,0,0,0.1); }
-        .feature-card .icon { margin-bottom: 20px; color: var(--color-primario); }
-        .feature-card .icon svg { width: 40px; height: 40px; }
-        .bonus-card {
-            background: linear-gradient(90deg, var(--color-primario), var(--color-secundario));
-            color: white; text-align: center; padding: 30px; border-radius: 12px; margin-top: 50px;
-        }
-        .bonus-card h3 { color: white; }
-        .bonus-card p { color: rgba(255,255,255,0.9); margin: 0 auto; }
+        .feature-card .icon { margin-bottom: 20px; color: var(--color-primario); text-align: center; }
+        .feature-card .icon i { font-size: 36px; }
         .credibility-container { display: grid; grid-template-columns: 1fr; align-items: center; gap: 40px; text-align: center; }
         .credibility-photo { width: 100%; max-width: 250px; border-radius: 50%; box-shadow: 0 10px 30px rgba(0,0,0,0.1); justify-self: center; }
         .credibility-content h2, .credibility-content h3 { text-align: center; }
         .credibility-content p { margin-left: auto; margin-right: auto; }
-        .voice-academy-logo { max-width: 200px; margin-top: 20px; margin-left: auto; margin-right: auto; }
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin-top: 30px; text-align: center; }
         .stat-item h4 {
             font-size: 2.5rem; margin: 0; background: linear-gradient(90deg, var(--color-primario), var(--color-secundario));
@@ -256,7 +271,7 @@
       "@id": "https://syntastudio.com/",
       "url": "https://syntastudio.com/",
       "telephone": "",
-      "description": "Synta Studio construye sistemas web automáticos para consultores, abogados y profesionales de servicio que atraen, cualifican y agendan clientes de alto valor.",
+      "description": "Synta Studio construye sistemas web automáticos para Marcas Personales y Líderes de Pensamiento que atraen y convierten clientes de alto valor.",
       "founder": {
         "@type": "Person",
         "name": "Napoleon Baca"
@@ -273,13 +288,13 @@
       ],
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
-        "name": "Servicios de Sistemas Web",
+        "name": "Servicios de Ecosistemas Digitales",
         "itemListElement": [
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Sistema de Captación de Clientes"
+              "name": "Sistema de Ventas Automatizado"
             }
           },
           {
@@ -304,21 +319,18 @@
                 <span>Synta Studio</span>
             </a>
             
-            <!-- Botón Hamburguesa para móvil -->
             <button class="mobile-nav-toggle" aria-controls="main-nav" aria-expanded="false">
                 <span class="hamburger-box">
                     <span class="hamburger-inner"></span>
                 </span>
             </button>
             
-            <!-- Navegación con el botón CTA adentro -->
             <nav class="main-nav" id="main-nav">
-                <a href="#el-sistema">La Solución</a>
-                <a href="#credibilidad">Resultados</a>
-                <a href="#faq">Preguntas</a>
+                <a href="#el-sistema">El Ecosistema</a>
+                <a href="#credibilidad">El Productor</a>
                 <a href="synta-lab.html">Synta Lab</a>
-                <a href="#final-cta">Auditoría Gratuita</a>
-                <a href="#final-cta" class="cta-button nav-cta">Comenzar Auditoría</a>
+                <a href="#faq">Preguntas</a>
+                <a href="#final-cta" class="cta-button nav-cta">Empezar Diagnóstico</a>
             </nav>
         </div>
     </header>
@@ -328,63 +340,60 @@
         <section class="hero">
             <canvas id="hero-canvas"></canvas>
             <div class="container">
-                <p class="hero-subtitle">Para consultores, abogados y profesionales de servicio</p>
-                <h1>Deja de perseguir clientes. Construyamos una web que los atraiga, los cualifique y los agende por&nbsp;ti.</h1>
+                <p class="hero-subtitle">Para Marcas Personales y Líderes de Pensamiento que quieren un sistema de ventas tan brillante como sus ideas.</p>
+                <h1>Tienes un mensaje increíble. <strong>Construyamos la máquina</strong> que lo venda por&nbsp;ti.</h1>
                 <p>
-                    Dejamos de crear "páginas bonitas" y construimos motores automáticos que te ahorran tiempo y generan un ROI real, para que te enfoques en tus clientes, no en el trabajo administrativo.
+                    Pero antes de construir, hay que diagnosticar. Descubre los 5 errores que probablemente están frenando tu negocio online con mi auditoría estratégica gratuita.
                 </p>
-                <a href="#final-cta" class="cta-button">Quiero mi Auditoría Web Gratuita</a>
-                <p class="supporting-text">100% Gratis. Descubre los 5 errores que están haciendo invisible a tu negocio online.</p>
+                <a href="#final-cta" class="cta-button">Quiero mi Auditoría Gratuita</a>
+                <p class="supporting-text">100% Gratis. Sin jerga técnica. Solo el diagnóstico que necesitas para empezar.</p>
             </div>
         </section>
 
         <section class="problem-section">
             <div class="container">
-                <h2 class="reveal">Los 2 Errores que Convierten tu Web en un Gasto Inútil</h2>
-                <p class="reveal" style="text-align: center;">Si eres un profesional de servicio de alto nivel, es probable que tu presencia online caiga en una de estas dos trampas dolorosas:</p>
+                <h2 class="reveal">Tu presencia online o te genera clientes, o es un estorbo. <strong>No hay punto medio.</strong></h2>
+                <p class="reveal" style="text-align: center;">Si eres un experto con un mensaje, es casi seguro que te encuentras en uno de estos dos dolorosos escenarios:</p>
                 <div class="problem-grid">
                     <div class="problem-card reveal">
-                        <h3>1. La "Tarjeta de Visita Digital"</h3>
-                        <p>Tienes una web que se ve... bien. Describe lo que haces. Pero ahí se queda. No genera contactos, no filtra a los curiosos de los clientes serios y, al final del mes, no ha aportado ni un solo dólar a tu facturación. Es un pasivo, un adorno caro.</p>
+                        <h3><strong>ESCENARIO 1:</strong> Ya tienes una web <span class="small-parenthesis">(y sospechas que es un gasto inútil).</span></h3>
+                        <p>La creaste con toda la ilusión, pero seamos honestos: es un <strong>adorno caro</strong>. Un fósil digital que se ve profesional, pero no atrae a los clientes correctos y te hace <strong>perder el tiempo</strong> en llamadas con curiosos que solo "estaban mirando". No te genera dinero, <strong>te lo quita</strong>.</p>
                     </div>
                     <div class="problem-card reveal">
-                        <h3>2. El "Ladrón de Tiempo"</h3>
-                        <p>Peor aún, tu web atrae prospectos... pero no los correctos. Pierdes horas cada semana en llamadas y emails con gente que no puede pagar tus tarifas o que simplemente "estaba mirando". Tu recurso más valioso, tu tiempo, se evapora.</p>
+                        <h3><strong>ESCENARIO 2:</strong> No tienes web <span class="small-parenthesis">(y la ves como un gasto necesario, no una inversión).</span></h3>
+                        <p>Sabes que "necesitas una". La ves como una casilla que hay que marcar para tener "presencia". Tu principal temor es precisamente ese: que se quede solo en eso, en un gasto. Que inviertas un montón de dinero en una página bonita que no haga nada más. Y es un miedo lógico, porque una web bien hecha es tu <strong>mejor vendedor</strong>, no solo una tarjeta de visita glorificada.</p>
                     </div>
                 </div>
+                <p class="reveal" style="text-align: center; margin-left: auto; margin-right: auto; margin-top: 40px;">No importa si tu problema es reparar un sistema roto o construir uno desde cero de la forma correcta. <strong>El primer paso siempre es el mismo: un diagnóstico claro.</strong></p>
             </div>
         </section>
 
         <section id="el-sistema">
             <div class="container">
-                <h2 class="reveal">No necesitas otra web. Necesitas un sistema inteligente.</h2>
-                <p class="reveal" style="text-align: center;">Olvídate de solo un "diseño bonito". Nosotros construimos un ecosistema de ventas automatizado y a medida para ti. Una máquina diseñada con un único propósito: convertir extraños interesados en clientes de alto valor.</p>
+                <h2 class="reveal">Una página web es solo el principio. <strong>Yo construyo el Ecosistema completo.</strong></h2>
+                <p class="reveal" style="text-align: center;">Claro que sí, el diseño de tu web será espectacular y funcional; eso es innegociable. Pero eso es solo una pieza del rompecabezas. Mi trabajo es aplicar mi disciplina de productor para crear el sistema completo donde tu web, tu voz, tus correos y la IA trabajen en <strong>perfecta armonía</strong>.</p>
                 <div class="features-grid">
                     <div class="feature-card reveal">
                         <div class="icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-2.272M15 19.128v-3.872M15 19.128L11.625 15.75M15 19.128l3.375-3.375M3 7.5a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v9.75a2.25 2.25 0 0 1-2.25-2.25H5.25a2.25 2.25 0 0 1-2.25-2.25V7.5Z" /></svg>
+                            <i class="fa-solid fa-bullhorn"></i>
                         </div>
-                        <h3>1. Landing Page Persuasiva + Copywriting</h3>
-                        <p>No es solo diseño, es psicología. Escribimos cada palabra y diseñamos cada sección para guiar a tu visitante desde el escepticismo hasta la confianza total, haciendo que contactarte sea el siguiente paso lógico.</p>
+                        <h3>El Manifiesto (La Estrategia y tu Voz)</h3>
+                        <p>Primero, definimos tu historia. Creamos un documento estratégico que se convierte en la <strong>"partitura" de tu marca</strong>, asegurando que cada palabra y cada correo suenen auténticamente a ti.</p>
                     </div>
                     <div class="feature-card reveal">
                         <div class="icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" /></svg>
+                            <i class="fa-solid fa-desktop"></i>
                         </div>
-                        <h3>2. Sistema de Filtro y Agendamiento</h3>
-                        <p>Integramos formularios interactivos y tu calendario (Calendly) para que solo personas que cumplen tus criterios puedan agendar una llamada. Se acabaron las llamadas de relleno y el tiempo perdido.</p>
+                        <h3>La Landing Page (El Escenario Principal)</h3>
+                        <p>Luego, construimos tu escenario digital. Una página web y un sistema de ventas basado en esa "partitura", diseñado con <strong>psicología y persuasión</strong> para convertir visitantes en clientes.</p>
                     </div>
                     <div class="feature-card reveal">
                         <div class="icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" /></svg>
+                            <i class="fa-solid fa-robot"></i>
                         </div>
-                        <h3>3. Secuencia de Email Automatizada</h3>
-                        <p>¿Un prospecto descarga tu guía? Nuestro sistema le envía automáticamente correos que construyen la relación por ti, manteniendo tu marca en su mente sin que muevas un dedo. Nutre a tus leads en piloto automático.</p>
+                        <h3>La Automatización (La Banda en Piloto Automático)</h3>
+                        <p>Finalmente, conectamos todo: los correos, las optimizaciones con IA, el hosting. Creamos un sistema que <strong>trabaja para ti 24/7</strong>, nutriendo a tus leads y cerrando ventas.</p>
                     </div>
-                </div>
-                 <div class="bonus-card reveal">
-                    <h3>BONUS: Hosting Gratuito por 1 Año</h3>
-                    <p>Para eliminar una preocupación técnica y un costo fijo. Nos encargamos de todo para que tu sistema funcione sin interrupciones.</p>
                 </div>
             </div>
         </section>
@@ -461,8 +470,8 @@
                         <img src="https://i.imgur.com/ATLBNhv.png" alt="Mockup del PDF gratuito Auditoría Estratégica de Synta Studio" class="cta-book-mockup">
                     </div>
                     <div class="cta-content-wrapper reveal">
-                        <h2>¿Listo para que tu web trabaje tan duro como tú?</h2>
-                        <p>El primer paso es entender dónde estás perdiendo oportunidades. Mi "Auditoría Estratégica" es un checklist en PDF, sin jerga técnica, que te mostrará los 5 agujeros negros que probablemente le están costando dinero a tu negocio. Es el diagnóstico perfecto antes de construir la solución.</p>
+                        <h2>El éxito de tu presencia online se decide antes de escribir la primera línea de código.</h2>
+                        <p>Ya sea que tengas una web que no da resultados o que estés por construir la primera y quieras hacerlo bien desde el principio, el primer paso es tener el mapa correcto. Mi "Auditoría Estratégica" es un checklist en PDF que te mostrará los 5 pilares de un ecosistema digital que de verdad atrae clientes. Úsalo para diagnosticar los 'agujeros negros' de tu web actual, o como la guía definitiva para empezar con el pie derecho.</p>
                         
                         <div class="lead-form-container">
                             <form id="leadForm" action="https://formspree.io/f/mjkobbze" method="POST">
@@ -471,7 +480,7 @@
                                 <button type="submit" class="cta-button" id="submitBtn">Envíame la Auditoría Gratuita</button>
                             </form>
                             <div id="formMessage" class="form-message"></div>
-                            <p style="font-size: 0.8rem; text-align: center; margin-top: 15px; margin-bottom: 0;">Sin costo. Sin compromiso. Solo valor puro.</p>
+                            <p style="font-size: 0.8rem; text-align: center; margin-top: 15px; margin-bottom: 0;">Sin costo. Sin compromiso. El primer paso para un ecosistema exitoso.</p>
                         </div>
                     </div>
                 </div>
