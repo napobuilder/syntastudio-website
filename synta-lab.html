@@ -646,6 +646,10 @@ Nota Importante: La capacidad real de generar imágenes directamente y la calida
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
+            // --- LÓGICA DE LA SECCIÓN DE PROMPTS (EXISTENTE) ---
+            const searchInput = document.getElementById('search-input');
+            const filtersContainer = document.getElementById('filter-buttons-container');
+            const gridContainer = document.getElementById('prompts-grid-container');
             
             // --- LÓGICA DE ACCESO CON CONTRASEÑA POR CORREO ---
             const loginSection = document.getElementById('login-section');
@@ -759,10 +763,7 @@ Nota Importante: La capacidad real de generar imágenes directamente y la calida
                 }
             }
 
-            // --- LÓGICA DE LA SECCIÓN DE PROMPTS (EXISTENTE) ---
-            const searchInput = document.getElementById('search-input');
-            const filtersContainer = document.getElementById('filter-buttons-container');
-            const gridContainer = document.getElementById('prompts-grid-container');
+            
 
             function initializePrompts() {
                 console.log('initializePrompts called');
