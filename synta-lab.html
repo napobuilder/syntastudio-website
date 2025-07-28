@@ -369,16 +369,15 @@
         <section class="synta-lab-section">
             <div class="container">
                 
-                <!-- SECCIÓN DE LOGIN -->
+                <!-- SECCIÓN DE LOGIN (MAGIC LINK) -->
                 <div id="login-section" class="login-form-wrapper">
-                    <form class="login-form" action="https://formspree.io/f/mzzvepkw" method="POST">
+                    <form id="magic-link-form" class="login-form">
                         <h2>Acceso a<br><span class="login-title-highlight">Synta Lab</span></h2>
-                        <p>Introduce tus datos y la contraseña para acceder a los prompts.</p>
-                        <input type="text" name="Nombre Completo" placeholder="Nombre Completo" required>
-                        <input type="email" name="Correo Electronico" placeholder="Correo Electrónico" required>
-                        <input type="password" id="password-input" name="Contrasena" placeholder="Contraseña" required>
-                        <button type="submit" class="cta-button">Acceder</button>
-                        <p id="login-error" class="login-error" style="display: none;">Contraseña incorrecta. Inténtalo de nuevo.</p>
+                        <p id="form-message">Introduce tu nombre y correo electrónico para recibir un enlace de acceso mágico.</p>
+                        <input type="text" name="name" placeholder="Nombre Completo" required>
+                        <input type="email" name="email" placeholder="Correo Electrónico" required>
+                        <button type="submit" class="cta-button">Enviar Enlace de Acceso</button>
+                        <p id="login-status" class="login-error" style="display: none;"></p>
                     </form>
                 </div>
 
@@ -644,47 +643,118 @@ Nota Importante: La capacidad real de generar imágenes directamente y la calida
 
         document.addEventListener('DOMContentLoaded', () => {
             
-            // --- LÓGICA DE LOGIN ---
+            // --- LÓGICA DE ACCESO CON MAGIC LINK ---
             const loginSection = document.getElementById('login-section');
             const promptsSection = document.getElementById('prompts-section');
-            const loginForm = loginSection.querySelector('.login-form');
-            const passwordInput = document.getElementById('password-input');
-            const loginError = document.getElementById('login-error');
-            const correctPassword = "syntalabcontext";
+            const magicLinkForm = document.getElementById('magic-link-form');
+            const emailInput = document.getElementById('email-input');
+            const nameInput = magicLinkForm.querySelector('input[name="name"]');
+            const loginStatus = document.getElementById('login-status');
+            const formMessage = document.getElementById('form-message');
 
-            loginForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                if (passwordInput.value === correctPassword) {
-                    const submitButton = loginForm.querySelector('.cta-button');
+            // Función para mostrar la sección de prompts
+            function showPromptsSection() {
+                loginSection.style.display = 'none';
+                promptsSection.style.display = 'block';
+                initializePrompts();
+            }
+
+            // Función para mostrar la sección de login
+            function showLoginSection(message = "Introduce tu nombre y correo electrónico para recibir un enlace de acceso mágico.", isError = false) {
+                loginSection.style.display = 'block';
+                promptsSection.style.display = 'none';
+                formMessage.textContent = message;
+                formMessage.style.color = isError ? '#e74c3c' : '#4a4a4a';
+            }
+
+            // Manejar el envío del formulario de solicitud de Magic Link
+            if (magicLinkForm) {
+                magicLinkForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    const submitButton = magicLinkForm.querySelector('.cta-button');
+                    const originalBtnText = submitButton.textContent;
+
                     submitButton.disabled = true;
                     submitButton.textContent = 'Enviando...';
-                    
-                    const formData = new FormData(loginForm);
+                    loginStatus.style.display = 'block';
+                    loginStatus.textContent = 'Enviando enlace... Por favor, espera.';
+                    loginStatus.style.color = 'blue';
+
+                    const email = emailInput.value;
+                    const name = nameInput.value;
+
                     try {
-                        const response = await fetch(loginForm.action, {
-                            method: loginForm.method, body: formData, headers: { 'Accept': 'application/json' }
+                        const response = await fetch('/.netlify/functions/request-magic-link', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email, name }),
                         });
+
+                        const result = await response.json();
+
                         if (response.ok) {
-                            loginSection.style.display = 'none';
-                            promptsSection.style.display = 'block';
-                            initializePrompts();
+                            loginStatus.textContent = '¡Enlace enviado! Revisa tu correo electrónico para acceder.';
+                            loginStatus.style.color = 'green';
+                            magicLinkForm.reset();
                         } else {
-                            throw new Error('Error al enviar el formulario.');
+                            loginStatus.textContent = `Error: ${result.message || 'No se pudo enviar el enlace.'}`;
+                            loginStatus.style.color = 'red';
                         }
                     } catch (error) {
-                        loginError.textContent = 'Error de conexión. Mostrando prompts de todas formas.';
-                        loginError.style.display = 'block';
-                        loginSection.style.display = 'none';
-                        promptsSection.style.display = 'block';
-                        initializePrompts();
+                        console.error('Error al solicitar Magic Link:', error);
+                        loginStatus.textContent = 'Error de conexión. Inténtalo de nuevo.';
+                        loginStatus.style.color = 'red';
+                    } finally {
+                        submitButton.disabled = false;
+                        submitButton.textContent = originalBtnText;
                     }
-                } else {
-                    loginError.style.display = 'block';
-                    passwordInput.focus();
-                }
-            });
+                });
+            }
 
-            // --- LÓGICA DE LA SECCIÓN DE PROMPTS ---
+            // Lógica para verificar el Magic Link al cargar la página
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
+
+            if (token) {
+                // Si hay un token, intenta verificarlo
+                showLoginSection('Verificando tu enlace de acceso...', false);
+                loginStatus.style.display = 'block';
+                loginStatus.textContent = 'Verificando...';
+                loginStatus.style.color = 'blue';
+
+                fetch('/.netlify/functions/verify-magic-link', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.valid) {
+                        // Almacenar la sesión (ej. en localStorage)
+                        localStorage.setItem('syntaLabSession', JSON.stringify({ email: data.email, name: data.name, valid: true }));
+                        // Limpiar el token de la URL
+                        window.history.replaceState({}, document.title, window.location.pathname);
+                        showPromptsSection();
+                    } else {
+                        showLoginSection(data.message || 'Enlace de acceso inválido o caducado.', true);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al verificar Magic Link:', error);
+                    showLoginSection('Error de conexión al verificar el enlace.', true);
+                });
+            } else {
+                // Si no hay token, verificar si ya hay una sesión activa
+                const session = JSON.parse(localStorage.getItem('syntaLabSession'));
+                if (session && session.valid) {
+                    showPromptsSection();
+                } else {
+                    showLoginSection(); // Mostrar el formulario de solicitud de Magic Link
+                }
+            }
+
+            // --- LÓGICA DE LA SECCIÓN DE PROMPTS (EXISTENTE) ---
             const searchInput = document.getElementById('search-input');
             const filtersContainer = document.getElementById('filter-buttons-container');
             const gridContainer = document.getElementById('prompts-grid-container');

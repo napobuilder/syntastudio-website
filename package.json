@@ -18,6 +18,7 @@
   "homepage": "https://github.com/napobuilder/syntastudio-website#readme",
   "description": "",
   "dependencies": {
+    "@netlify/blobs": "^10.0.7",
     "@sendgrid/mail": "^8.1.5"
   }
 }
