@@ -19,7 +19,7 @@ exports.handler = async (event, context) => {
 
     const msgToMe = {
       to: 'napbak@gmail.com', // Tu dirección de correo donde quieres recibir los mensajes
-      from: 'ceo@syntastudio.com', // ¡CAMBIA ESTO a tu dirección de correo autenticada en SendGrid!
+      from: { email: 'ceo@syntastudio.com', name: 'Napoleon Baca' },
       subject: `Nueva solicitud de ${data.name} desde tu web`,
       html: `
         <p><strong>Nombre:</strong> ${data.name}</p>
@@ -29,7 +29,7 @@ exports.handler = async (event, context) => {
 
     const msgToUser = {
       to: data.email, // El email del usuario que rellenó el formulario
-      from: 'ceo@syntastudio.com', // ¡CAMBIA ESTO a tu dirección de correo autenticada en SendGrid!
+      from: { email: 'ceo@syntastudio.com', name: 'Napoleon Baca' },
       subject: 'Aquí tienes tu guía (y la verdad sobre por qué la necesitas).',
       html: `
         <h1>¡Hola, ${data.name}!</h1>
