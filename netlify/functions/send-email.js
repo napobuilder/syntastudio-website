@@ -30,13 +30,17 @@ exports.handler = async (event, context) => {
     const msgToUser = {
       to: data.email, // El email del usuario que rellenó el formulario
       from: 'ceo@syntastudio.com', // ¡CAMBIA ESTO a tu dirección de correo autenticada en SendGrid!
-      subject: '¡Gracias por tu interés en Synta Studio! Aquí tienes tu Auditoría Estratégica.',
+      subject: 'Aquí tienes tu guía (y la verdad sobre por qué la necesitas).',
       html: `
-        <h1>¡Hola ${data.name}!</h1>
-        <p>Gracias por tu interés en Synta Studio. Aquí tienes el enlace a tu Auditoría Estratégica gratuita:</p>
-        <p><a href="https://syntastudio.com/gracias.html">Descarga tu Auditoría Estratégica aquí</a></p>
-        <p>Esperamos que te sea de gran utilidad. Si tienes alguna pregunta, no dudes en contactarnos.</p>
-        <p>Saludos cordiales,<br>El equipo de Synta Studio</p>
+        <h1>¡Hola, ${data.name}!</h1>
+        <p>Aquí tienes lo que viniste a buscar: tu guía gratuita sobre los "5 Agujeros que Hacen Invisible a tu Negocio Online".</p>
+        <p><a href="https://syntastudio.com/gracias.html"> >> Descarga tu Guía Gratuita Aquí << </a></p>
+        <p>Ahora que tienes el diagnóstico, quiero hablarte de la verdadera enfermedad. Porque, fuera de joda, esos 5 agujeros son solo los síntomas.</p>
+        <p>He visto cientos de webs de profesionales brillantes. La mayoría son como los maniquíes de las tiendas de ropa de lujo: están divinos, tienen un diseño impecable, pero no tienen nada en la cabeza.</p>
+        <p>Son una fachada bonita sin un mensaje claro, sin una voz, sin una estrategia que guíe al visitante. Y una web sin un mensaje persuasivo es solo un adorno caro.</p>
+        <p>El copywriting y la voz de tu marca no son el "último paso". Son el primer paso. Son los cimientos sobre los que se construye todo lo demás. Antes de pensar en el diseño, en los colores o en los botones, tienes que saber qué carajo vas a decir.</p>
+        <p>En el próximo correo, te voy a proponer un atajo para que dejes de tener un maniquí y empieces a construir un vendedor que trabaje para ti 24/7.</p>
+        <p>Seguimos,<br>Napoleón Baca<br>Synta Studio</p>
       `,
     };
 
