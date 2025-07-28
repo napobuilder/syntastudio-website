@@ -1,0 +1,23 @@
+{
+  "name": "synta-studio",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/napobuilder/syntastudio-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/napobuilder/syntastudio-website/issues"
+  },
+  "homepage": "https://github.com/napobuilder/syntastudio-website#readme",
+  "description": "",
+  "dependencies": {
+    "@sendgrid/mail": "^8.1.5"
+  }
+}

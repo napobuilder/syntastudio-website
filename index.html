@@ -474,8 +474,8 @@
                         <p>Ya sea que tengas una web que no da resultados o que estés por construir la primera y quieras hacerlo bien desde el principio, el primer paso es tener el mapa correcto. Mi "Auditoría Estratégica" es un checklist en PDF que te mostrará los 5 pilares de un ecosistema digital que de verdad atrae clientes. Úsalo para diagnosticar los 'agujeros negros' de tu web actual, o como la guía definitiva para empezar con el pie derecho.</p>
                         
                         <div class="lead-form-container">
-                            <form id="leadForm" action="https://formspree.io/f/mjkobbze" method="POST">
-                                <input type="text" name="nombre" placeholder="Tu Nombre" required>
+                            <form id="leadForm">
+                                <input type="text" name="name" placeholder="Tu Nombre" required>
                                 <input type="email" name="email" placeholder="Tu Mejor Email" required>
                                 <button type="submit" class="cta-button" id="submitBtn">Envíame la Auditoría Gratuita</button>
                             </form>
@@ -561,43 +561,56 @@
                 });
             }
 
-            // Script para el formulario de contacto
+            // Script para el formulario de contacto (integrado con Netlify Function)
             const leadForm = document.getElementById('leadForm');
-            if(leadForm) {
-                const submitBtn = document.getElementById('submitBtn');
-                const formMessage = document.getElementById('formMessage');
-                leadForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    if(!submitBtn || !formMessage) return;
+            const formStatus = document.getElementById('formMessage'); // Usamos el mismo div para el estado
+
+            if (leadForm) {
+                leadForm.addEventListener('submit', async (event) => {
+                    event.preventDefault(); // Evita el envío tradicional del formulario
+
+                    const submitBtn = document.getElementById('submitBtn');
                     const originalBtnText = submitBtn.textContent;
+
                     submitBtn.disabled = true;
                     submitBtn.textContent = 'Enviando...';
-                    formMessage.style.display = 'none';
-                    const formData = new FormData(this);
-                    fetch(this.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: { 'Accept': 'application/json' }
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            window.location.href = 'gracias.html';
-                            return response.json();
-                        }
-                        return response.json().then(data => {
-                            if (data && data.errors) throw new Error(data.errors.map(error => error.message).join(", "));
-                            throw new Error('Hubo un problema al enviar el formulario.');
+                    formStatus.style.display = 'block'; // Asegurarse de que el div de estado sea visible
+                    formStatus.className = 'form-message'; // Limpiar clases anteriores
+                    formStatus.textContent = 'Enviando...';
+                    formStatus.style.color = 'blue'; // O el color que prefieras para "enviando"
+
+                    const formData = new FormData(leadForm);
+                    const data = Object.fromEntries(formData.entries());
+
+                    try {
+                        // La URL de tu Netlify Function es /.netlify/functions/nombre-de-tu-funcion
+                        const response = await fetch('/.netlify/functions/send-email', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(data),
                         });
-                    })
-                    .catch(error => {
-                        formMessage.textContent = error.message || 'Hubo un error. Por favor, inténtalo de nuevo.';
-                        formMessage.className = 'form-message error';
-                        formMessage.style.display = 'block';
-                    })
-                    .finally(() => {
+
+                        const result = await response.json();
+
+                        if (response.ok) {
+                            formStatus.textContent = '¡Mensaje enviado con éxito!';
+                            formStatus.className = 'form-message success';
+                            leadForm.reset(); // Limpia el formulario
+                            window.location.href = 'gracias.html'; // Redirige a gracias.html
+                        } else {
+                            formStatus.textContent = `Error al enviar mensaje: ${result.details || result.error || 'Desconocido'}`;
+                            formStatus.className = 'form-message error';
+                        }
+                    } catch (error) {
+                        console.error('Error de red o inesperado:', error);
+                        formStatus.textContent = 'Ocurrió un error inesperado. Por favor, inténtalo de nuevo más tarde.';
+                        formStatus.className = 'form-message error';
+                    } finally {
                         submitBtn.disabled = false;
                         submitBtn.textContent = originalBtnText;
-                    });
+                    }
                 });
             }
         }); 
