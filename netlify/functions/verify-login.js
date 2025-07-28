@@ -25,7 +25,7 @@ exports.handler = async (event, context) => {
         // Para este ejemplo, devolvemos un email de ejemplo.
         return {
             statusCode: 200,
-            body: JSON.stringify({ valid: true, email: data.email, name: data.name }),
+            body: JSON.stringify({ valid: true }),
         };
     } else {
         return {
