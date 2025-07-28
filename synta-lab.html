@@ -371,12 +371,11 @@
                 
                 <!-- SECCIÓN DE LOGIN (MAGIC LINK) -->
                 <div id="login-section" class="login-form-wrapper">
-                    <form id="magic-link-form" class="login-form">
+                    <form id="login-form" class="login-form">
                         <h2>Acceso a<br><span class="login-title-highlight">Synta Lab</span></h2>
-                        <p id="form-message">Introduce tu nombre y correo electrónico para recibir un enlace de acceso mágico.</p>
-                        <input type="text" name="name" placeholder="Nombre Completo" required>
+                        <p id="form-message">Introduce tu correo electrónico para recibir tu contraseña de acceso.</p>
                         <input type="email" name="email" id="email-input" placeholder="Correo Electrónico" required>
-                        <button type="submit" class="cta-button">Enviar Enlace de Acceso</button>
+                        <button type="submit" class="cta-button">Enviar Contraseña</button>
                         <p id="login-status" class="login-error" style="display: none;"></p>
                     </form>
                 </div>
@@ -647,12 +646,11 @@ Nota Importante: La capacidad real de generar imágenes directamente y la calida
 
         document.addEventListener('DOMContentLoaded', () => {
             
-            // --- LÓGICA DE ACCESO CON MAGIC LINK ---
+            // --- LÓGICA DE ACCESO CON CONTRASEÑA POR CORREO ---
             const loginSection = document.getElementById('login-section');
             const promptsSection = document.getElementById('prompts-section');
-            const magicLinkForm = document.getElementById('magic-link-form');
+            const loginForm = document.getElementById('login-form');
             const emailInput = document.getElementById('email-input');
-            const nameInput = magicLinkForm.querySelector('input[name="name"]');
             const loginStatus = document.getElementById('login-status');
             const formMessage = document.getElementById('form-message');
 
@@ -664,49 +662,48 @@ Nota Importante: La capacidad real de generar imágenes directamente y la calida
             }
 
             // Función para mostrar la sección de login
-            function showLoginSection(message = "Introduce tu nombre y correo electrónico para recibir un enlace de acceso mágico.", isError = false) {
+            function showLoginSection(message = "Introduce tu correo electrónico para recibir tu contraseña de acceso.", isError = false) {
                 loginSection.style.display = 'block';
                 promptsSection.style.display = 'none';
                 formMessage.textContent = message;
                 formMessage.style.color = isError ? '#e74c3c' : '#4a4a4a';
             }
 
-            // Manejar el envío del formulario de solicitud de Magic Link
-            if (magicLinkForm) {
-                magicLinkForm.addEventListener('submit', async (e) => {
+            // Manejar el envío del formulario de solicitud de contraseña
+            if (loginForm) {
+                loginForm.addEventListener('submit', async (e) => {
                     e.preventDefault();
 
-                    const submitButton = magicLinkForm.querySelector('.cta-button');
+                    const submitButton = loginForm.querySelector('.cta-button');
                     const originalBtnText = submitButton.textContent;
 
                     submitButton.disabled = true;
                     submitButton.textContent = 'Enviando...';
                     loginStatus.style.display = 'block';
-                    loginStatus.textContent = 'Enviando enlace... Por favor, espera.';
+                    loginStatus.textContent = 'Enviando contraseña... Por favor, espera.';
                     loginStatus.style.color = 'blue';
 
                     const email = emailInput.value;
-                    const name = nameInput.value;
 
                     try {
-                        const response = await fetch('/.netlify/functions/request-magic-link', {
+                        const response = await fetch('/.netlify/functions/sendgrid-login', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ email, name }),
+                            body: JSON.stringify({ email }),
                         });
 
                         const result = await response.json();
 
                         if (response.ok) {
-                            loginStatus.textContent = '¡Enlace enviado! Revisa tu correo electrónico para acceder.';
+                            loginStatus.textContent = '¡Contraseña enviada! Revisa tu correo electrónico para acceder.';
                             loginStatus.style.color = 'green';
-                            magicLinkForm.reset();
+                            loginForm.reset();
                         } else {
-                            loginStatus.textContent = `Error: ${result.message || 'No se pudo enviar el enlace.'}`;
+                            loginStatus.textContent = `Error: ${result.message || 'No se pudo enviar la contraseña.'}`;
                             loginStatus.style.color = 'red';
                         }
                     } catch (error) {
-                        console.error('Error al solicitar Magic Link:', error);
+                        console.error('Error al solicitar contraseña:', error);
                         loginStatus.textContent = 'Error de conexión. Inténtalo de nuevo.';
                         loginStatus.style.color = 'red';
                     } finally {
@@ -716,18 +713,18 @@ Nota Importante: La capacidad real de generar imágenes directamente y la calida
                 });
             }
 
-            // Lógica para verificar el Magic Link al cargar la página
+            // Lógica para verificar la sesión al cargar la página
             const urlParams = new URLSearchParams(window.location.search);
             const token = urlParams.get('token');
 
             if (token) {
                 // Si hay un token, intenta verificarlo
-                showLoginSection('Verificando tu enlace de acceso...', false);
+                showLoginSection('Verificando tu acceso...', false);
                 loginStatus.style.display = 'block';
                 loginStatus.textContent = 'Verificando...';
                 loginStatus.style.color = 'blue';
 
-                fetch('/.netlify/functions/verify-magic-link', {
+                fetch('/.netlify/functions/verify-login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ token }),
@@ -736,17 +733,17 @@ Nota Importante: La capacidad real de generar imágenes directamente y la calida
                 .then(data => {
                     if (data.valid) {
                         // Almacenar la sesión (ej. en localStorage)
-                        localStorage.setItem('syntaLabSession', JSON.stringify({ email: data.email, name: data.name, valid: true }));
+                        localStorage.setItem('syntaLabSession', JSON.stringify({ email: data.email, valid: true }));
                         // Limpiar el token de la URL
                         window.history.replaceState({}, document.title, window.location.pathname);
                         showPromptsSection();
                     } else {
-                        showLoginSection(data.message || 'Enlace de acceso inválido o caducado.', true);
+                        showLoginSection(data.message || 'Acceso inválido o caducado.', true);
                     }
                 })
                 .catch(error => {
-                    console.error('Error al verificar Magic Link:', error);
-                    showLoginSection('Error de conexión al verificar el enlace.', true);
+                    console.error('Error al verificar acceso:', error);
+                    showLoginSection('Error de conexión al verificar el acceso.', true);
                 });
             } else {
                 // Si no hay token, verificar si ya hay una sesión activa
@@ -754,7 +751,7 @@ Nota Importante: La capacidad real de generar imágenes directamente y la calida
                 if (session && session.valid) {
                     showPromptsSection();
                 } else {
-                    showLoginSection(); // Mostrar el formulario de solicitud de Magic Link
+                    showLoginSection(); // Mostrar el formulario de solicitud de contraseña
                 }
             }
 
