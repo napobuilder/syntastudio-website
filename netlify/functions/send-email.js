@@ -47,6 +47,28 @@ exports.handler = async (event, context) => {
     await sgMail.send(msgToMe);
     await sgMail.send(msgToUser);
 
+    // Añadir el contacto a la lista de SendGrid para la automatización
+    const request = {
+      url: `/v3/marketing/contacts`,
+      method: 'PUT',
+      body: {
+        list_ids: ['b4db8be7-9267-4058-98e5-00c0d878448e'], // ID de tu lista de SendGrid
+        contacts: [
+          {
+            email: data.email,
+            first_name: data.name, // Asumiendo que 'name' es el nombre completo
+          },
+        ],
+      },
+    };
+
+    try {
+      await sgMail.client.request(request);
+      console.log('Contacto añadido a la lista de SendGrid con éxito.');
+    } catch (error) {
+      console.error('Error al añadir contacto a la lista de SendGrid:', error.response ? error.response.body : error.message);
+    }
+
     return {
       statusCode: 200,
       body: JSON.stringify({ message: 'Email sent successfully!' }),
