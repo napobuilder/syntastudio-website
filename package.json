@@ -19,6 +19,7 @@
   "description": "",
   "dependencies": {
     "@netlify/blobs": "^10.0.7",
-    "@sendgrid/mail": "^8.1.5"
+    "@sendgrid/mail": "^8.1.5",
+    "uuid": "^11.1.0"
   }
 }
