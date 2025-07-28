@@ -373,7 +373,8 @@
                 <div id="login-section" class="login-form-wrapper">
                     <form id="login-form" class="login-form">
                         <h2>Acceso a<br><span class="login-title-highlight">Synta Lab</span></h2>
-                        <p id="form-message">Introduce tu correo electrónico para recibir tu contraseña de acceso.</p>
+                        <p id="form-message">Introduce tu nombre y correo electrónico para recibir tu contraseña de acceso.</p>
+                        <input type="text" name="name" id="name-input" placeholder="Nombre Completo" required>
                         <input type="email" name="email" id="email-input" placeholder="Correo Electrónico" required>
                         <button type="submit" class="cta-button">Enviar Contraseña</button>
                         <p id="login-status" class="login-error" style="display: none;"></p>
@@ -651,18 +652,20 @@ Nota Importante: La capacidad real de generar imágenes directamente y la calida
             const promptsSection = document.getElementById('prompts-section');
             const loginForm = document.getElementById('login-form');
             const emailInput = document.getElementById('email-input');
+            const nameInput = document.getElementById('name-input');
             const loginStatus = document.getElementById('login-status');
             const formMessage = document.getElementById('form-message');
 
             // Función para mostrar la sección de prompts
             function showPromptsSection() {
+                console.log('showPromptsSection called');
                 loginSection.style.display = 'none';
                 promptsSection.style.display = 'block';
                 initializePrompts();
             }
 
             // Función para mostrar la sección de login
-            function showLoginSection(message = "Introduce tu correo electrónico para recibir tu contraseña de acceso.", isError = false) {
+            function showLoginSection(message = "Introduce tu nombre y correo electrónico para recibir tu contraseña de acceso.", isError = false) {
                 loginSection.style.display = 'block';
                 promptsSection.style.display = 'none';
                 formMessage.textContent = message;
@@ -684,12 +687,13 @@ Nota Importante: La capacidad real de generar imágenes directamente y la calida
                     loginStatus.style.color = 'blue';
 
                     const email = emailInput.value;
+                    const name = nameInput.value;
 
                     try {
                         const response = await fetch('/.netlify/functions/sendgrid-login', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ email }),
+                            body: JSON.stringify({ email, name }),
                         });
 
                         const result = await response.json();
@@ -733,7 +737,7 @@ Nota Importante: La capacidad real de generar imágenes directamente y la calida
                 .then(data => {
                     if (data.valid) {
                         // Almacenar la sesión (ej. en localStorage)
-                        localStorage.setItem('syntaLabSession', JSON.stringify({ email: data.email, valid: true }));
+                        localStorage.setItem('syntaLabSession', JSON.stringify({ email: data.email, name: data.name, valid: true }));
                         // Limpiar el token de la URL
                         window.history.replaceState({}, document.title, window.location.pathname);
                         showPromptsSection();
@@ -761,6 +765,8 @@ Nota Importante: La capacidad real de generar imágenes directamente y la calida
             const gridContainer = document.getElementById('prompts-grid-container');
 
             function initializePrompts() {
+                console.log('initializePrompts called');
+                console.log('promptsData content:', promptsData);
                 renderFilterButtons();
                 renderPromptCards(promptsData);
                 
@@ -780,6 +786,7 @@ Nota Importante: La capacidad real de generar imágenes directamente y la calida
                         prompt.tags.some(tag => tag.toLowerCase().includes(searchTerm));
                     return matchesCategory && matchesSearch;
                 });
+                console.log('Filtered prompts:', filteredPrompts);
                 renderPromptCards(filteredPrompts);
             }
 
@@ -799,6 +806,7 @@ Nota Importante: La capacidad real de generar imágenes directamente y la calida
             }
 
             function renderPromptCards(prompts) {
+                console.log('renderPromptCards called with prompts:', prompts);
                 gridContainer.innerHTML = prompts.map(prompt => {
                     const promptIndex = promptsData.indexOf(prompt);
                     return `

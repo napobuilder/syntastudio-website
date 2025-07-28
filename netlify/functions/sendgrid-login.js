@@ -26,7 +26,7 @@ exports.handler = async (event, context) => {
 
     const msg = {
         to: email,
-        from: 'ceo@syntastudio.com',
+        from: { email: 'ceo@syntastudio.com', name: 'Napoleon Baca' },
         subject: 'Tu Contraseña de Acceso a Synta Lab',
         html: `
             <p>Hola,</p>

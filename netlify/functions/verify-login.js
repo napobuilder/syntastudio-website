@@ -25,7 +25,7 @@ exports.handler = async (event, context) => {
         // Para este ejemplo, devolvemos un email de ejemplo.
         return {
             statusCode: 200,
-            body: JSON.stringify({ valid: true, email: 'usuario@ejemplo.com' }), // Reemplazar con el email real del usuario
+            body: JSON.stringify({ valid: true, email: data.email, name: data.name }),
         };
     } else {
         return {
