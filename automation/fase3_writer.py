@@ -35,27 +35,14 @@ def generate_article_from_content(content):
     RESPONDE ÚNICAMENTE CON EL OBJETO JSON. NO INCLUYAS NINGÚN OTRO TEXTO ANTES O DESPUÉS.
     """
     
-    # --- LLAMADA REAL A LA API (Ejemplo con Gemini) ---
-    # genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-    # model = genai.GenerativeModel('gemini-pro')
-    # response = model.generate_content(prompt)
-    # generated_data = json.loads(response.text)
-
-    # --- DATOS SIMULADOS PARA PRUEBAS ---
-    generated_data = {
-        "title": "La Nueva IA de OpenAI que Compone Música",
-        "meta_description": "¿Puede una IA componer una sinfonía? Descubre Jukebox, el nuevo modelo de OpenAI que está revolucionando la industria musical y la creación de contenido.",
-        "category": "Tecnología",
-        "image_alt": "Ondas de sonido generadas por inteligencia artificial en una pantalla de computadora.",
-        "main_keyword": "IA generadora de música",
-        "related_keywords": ["OpenAI Jukebox", "música con IA", "futuro de la composición musical"],
-        "content_markdown": "## La Barrera del Sonido se ha Roto\n\nLa inteligencia artificial ha conquistado el texto y la imagen, pero la música seguía siendo una frontera esquiva. Hasta ahora. OpenAI, el laboratorio detrás de DALL-E y GPT-4, ha presentado **Jukebox**, un modelo que no solo imita, sino que compone música con una complejidad asombrosa.\n\n### ¿Cómo Funciona Jukebox?\n\nA diferencia de otros modelos, Jukebox trabaja con audio en bruto, lo que le permite capturar matices, timbres y emociones que antes eran imposibles para una máquina. El resultado es una pieza musical coherente en género, instrumentación e incluso con voces cantadas.",
-        "faq_section": [
-            {"question": "¿Qué es OpenAI Jukebox?", "answer": "Jukebox es un sistema de inteligencia artificial creado por OpenAI que puede generar música original en una variedad de géneros y estilos, incluyendo voces rudimentarias."}, 
-            {"question": "¿Puede la IA reemplazar a los compositores humanos?", "answer": "Por ahora, la IA como Jukebox es una herramienta para potenciar la creatividad humana, no para reemplazarla. Ofrece a los músicos nuevas vías de inspiración y colaboración."}, 
-            {"question": "¿Cómo puedo usar la música generada por IA?", "answer": "La música generada por IA puede usarse para bandas sonoras de videos, música de fondo para podcasts o como punto de partida para nuevas composiciones, siempre revisando los términos de licencia."} 
-        ]
-    }
+    # --- LLAMADA REAL A LA API (Gemini) ---
+    genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+    model = genai.GenerativeModel('gemini-1.5-flash')
+    response = model.generate_content(
+        prompt,
+        generation_config={"response_mime_type": "application/json"}
+    )
+    generated_data = json.loads(response.text)
 
     word_count = len(generated_data['content_markdown'].split())
     generated_data['reading_time'] = round(word_count / 200) or 1
