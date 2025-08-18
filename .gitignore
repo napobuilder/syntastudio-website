@@ -1,3 +1,6 @@
 # Local Netlify folder
 .netlify
 synta-lab-no-auth.html
+
+# Automation secrets
+automation/.env

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Synta Studio</title>
+    <meta name="description" content="Explora artículos, tutoriales y noticias sobre diseño, desarrollo y estrategia de marca.">
+    <!-- ... (resto de tu head de blog.html) ... -->
+    <style>
+        /* --- TODO TU CSS DE BLOG.HTML VA AQUÍ --- */
+        :root { --color-primario: #6a11cb; /* ... */ }
+        body { font-family: 'Inter', sans-serif; /* ... */ }
+        .post-card { border: 1px solid var(--color-borde); /* ... */ }
+    </style>
+</head>
+<body>
+    <!-- Header (copiado de tu blog.html) -->
+    <header id="header" class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
+        <!-- ... tu código de header ... -->
+    </header>
+
+    <main class="pt-24">
+        <section class="py-16 md:py-24 text-center">
+            <!-- ... tu sección de encabezado de blog ... -->
+        </section>
+        <section class="py-12 md:py-20 bg-[var(--color-fondo-seccion)]">
+            <div class="container mx-auto px-6">
+                <div class="mb-16">
+                    <!-- ... tus filtros ... -->
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!--POST_CARDS_START-->
+                    {{POST_CARDS_HTML}}
+                    <!--POST_CARDS_END-->
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer (copiado de tu blog.html) -->
+    <footer>
+        <!-- ... tu código de footer ... -->
+    </footer>
+    <!-- Scripts (copiados de tu blog.html) -->
+    <script>
+        // ... tu código de JS ...
+    </script>
+</body>
+</html>

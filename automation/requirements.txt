@@ -1,0 +1,9 @@
+requests
+feedparser
+beautifulsoup4
+openai
+google-generativeai
+python-slugify
+markdown2
+GitPython
+python-dotenv
